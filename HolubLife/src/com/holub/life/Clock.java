@@ -84,6 +84,21 @@ public class Clock
 	{
 		// First set up a single listener that will handle all the
 		// menu-selection events except "Exit"
+		
+		// (TODO) 여기여기여기여기 
+		// 이 부분에서 시간을 동적으로 바꿀 수 있어야함.
+		// 0. 메뉴바에 숫자를 입력받아 그것을 tick의 parameter로 사용한다.
+		// 1. 0을 입력하면 halt
+		// 2. 메뉴바는 아마도 다음처럼 될 것 같음. >> | GRID | GO | TICK TIME (텍스트 박스) SET |
+		// 3. SET을 누르면 TICK TIME을 적용.
+		// 4. 사실 GO에 있는 모든 내용이 TICK TIME과 겹치는데...
+		
+		// 우리가 원하는 것은 $toDo에 숫자를 넣을 건데...
+		// 미리 정해진 프리셋이 아니라
+		// 입력 받은대로 바꾸고 싶다.
+		// 어떤 패턴??
+		
+		// toDo에 시간 객체를 전달해준다면 어떨까?
 
 		ActionListener modifier =									//{=startSetup}
 			new ActionListener()
@@ -102,12 +117,20 @@ public class Clock
 				}
 			};
 																	// {=midSetup}
-		MenuSite.addLine(this,"Go","Halt",  			modifier);
-		MenuSite.addLine(this,"Go","Tick (Single Step)",modifier);
-		MenuSite.addLine(this,"Go","Agonizing",	 	  	modifier);
-		MenuSite.addLine(this,"Go","Slow",		 		modifier);
-		MenuSite.addLine(this,"Go","Medium",	 	 	modifier);
-		MenuSite.addLine(this,"Go","Fast",				modifier); // {=endSetup}
+//		MenuSite.addLine(this,"Go","Halt",  			modifier);
+//		MenuSite.addLine(this,"Go","Tick (Single Step)",modifier);
+//		MenuSite.addLine(this,"Go","Agonizing",	 	  	modifier);
+//		MenuSite.addLine(this,"Go","Slow",		 		modifier);
+//		MenuSite.addLine(this,"Go","Medium",	 	 	modifier);
+//		MenuSite.addLine(this,"Go","Fast",				modifier); // {=endSetup}
+		
+		// 4
+		MenuSite.addLine(this,"Tick time","Halt",  				modifier);
+		MenuSite.addLine(this,"Tick time","Tick (Single Step)",	modifier);
+		MenuSite.addLine(this,"Tick time","Agonizing",	 	  	modifier);
+		MenuSite.addLine(this,"Tick time","Slow",		 		modifier);
+		MenuSite.addLine(this,"Tick time","Medium",	 	 		modifier);
+		MenuSite.addLine(this,"Tick time","Fast",				modifier); // {=endSetup}
 	}	//{=endCreateMenus}
 
 	private Publisher publisher = new Publisher();
