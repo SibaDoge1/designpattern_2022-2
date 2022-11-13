@@ -412,7 +412,7 @@ public final class MenuSite
 		Component element;
 
 		assert listener	!= null: "null listener";
-		JTextField fieldItem = new JTextField("Set Tick Count");
+		JTextField fieldItem = new JTextField("           ");
 //		fieldItem.repaint();
 		fieldItem.addActionListener( listener );
 

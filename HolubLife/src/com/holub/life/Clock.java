@@ -125,9 +125,13 @@ public class Clock
 				{
 					
 					ExtractTickFromActionEvent ETFAE = new ExtractTickFromActionEvent(e);
+					
+					// (TODO)
+					// 이 if-else도 지울 수 없을까나...
 					if (ETFAE.getName().equals(Go.Tick.getName())) {
-						tick();
 						TD.setTick(ETFAE.getTick());
+						startTicking();
+						tick();
 					}
 					else {
 						TD.setTick(ETFAE.getTick());
