@@ -32,7 +32,7 @@ import java.util.Observable;
 public class Clock
 {	private Timer			clock		= new Timer();
 	private TimerTask		tick		= null;
-	private static int curr_between_ticks;
+	private TickData curr_between_ticks = new TickData();
 	
 	// The clock can't be an everything-is-static singleton because
 	// it creates a menu, and it can't do that until the menus
@@ -66,11 +66,11 @@ public class Clock
 			tick=null;
 		}
 
-		if( curr_between_ticks > 0 )
+		if( curr_between_ticks.getTick() > 0 )
 		{	tick =	new TimerTask()
 					{	public void run(){ tick(); }
 					};
-			clock.scheduleAtFixedRate( tick, 0, curr_between_ticks);
+			clock.scheduleAtFixedRate( tick, 0, curr_between_ticks.getTick());
 		}
 	}
 
@@ -79,7 +79,7 @@ public class Clock
 
 	public void stop()
 	{	
-		curr_between_ticks = 0;
+		curr_between_ticks.setTick(0);;
 		startTicking();
 	}
 
@@ -124,23 +124,23 @@ public class Clock
 					if( toDo=='T' )
 						tick();				      // single tick
 					else if (toDo == 'A') {
-						curr_between_ticks = 500; // agonizing
+						curr_between_ticks.setTick(500); // agonizing
 						startTicking( );
 					}
 					else if (toDo == 'S') {
-						curr_between_ticks = 150; // slow
+						curr_between_ticks.setTick(150); // slow
 						startTicking( );
 					}
 					else if (toDo == 'M') {
-						curr_between_ticks = 70;  // medium
+						curr_between_ticks.setTick(70);  // medium
 						startTicking( );
 					}
 					else if (toDo == 'F') {
-						curr_between_ticks = 30;  // fast
+						curr_between_ticks.setTick(50);  // fast
 						startTicking( );
 					}
 					else {
-						curr_between_ticks = 0;   // halt
+						curr_between_ticks.setTick(0);   // halt
 						startTicking( );
 					}
 //						startTicking(   toDo=='A' ? 500:	  // agonizing
@@ -149,8 +149,11 @@ public class Clock
 //										toDo=='F' ? 30 : 0 ); // fast
 				}
 			};
-																	// {=midSetup}
-			
+		
+			// {=midSetup}
+		// 여기여기
+		TickMenu TM = new TickMenu();
+		
 		MenuSite.addLine(this,"Go","Halt",  			modifier);
 		MenuSite.addLine(this,"Go","Tick (Single Step)",modifier);
 		MenuSite.addLine(this,"Go","Agonizing",	 	  	modifier);
