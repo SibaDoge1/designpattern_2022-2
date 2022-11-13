@@ -119,39 +119,20 @@ public class Clock
 //		ActionEvent는 구조가 조금 다름..
 		
 		
-		
 		ActionListener modifier =									//{=startSetup}
 			new ActionListener()
 			{	public void actionPerformed(ActionEvent e)
 				{
-
-					// System.out.println((JMenuItem)e.getSource());
-//					char toDo = name.charAt(0);
-//
-//					if( toDo=='T' ) {
-//						tick();				      // single tick
-//						TD.setTick(0); 
-//					}
-//					else if (toDo == 'A') {
-//						TD.setTick(500); // agonizing
-//						startTicking( );
-//					}
-//					else if (toDo == 'S') {
-//						TD.setTick(150); // slow
-//						startTicking( );
-//					}
-//					else if (toDo == 'M') {
-//						TD.setTick(70);  // medium
-//						startTicking( );
-//					}
-//					else if (toDo == 'F') {
-//						TD.setTick(50);  // fast
-//						startTicking( );
-//					}
-//					else {
-//						TD.setTick(0);   // halt
-//						startTicking( );
-//					}
+					
+					ExtractTickFromActionEvent ETFAE = new ExtractTickFromActionEvent(e);
+					if (ETFAE.getName().equals(Go.Tick.getName())) {
+						tick();
+						TD.setTick(ETFAE.getTick());
+					}
+					else {
+						TD.setTick(ETFAE.getTick());
+						startTicking();
+					}
 				}
 			};
 		
