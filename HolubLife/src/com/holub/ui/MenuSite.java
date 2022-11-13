@@ -344,6 +344,91 @@ public final class MenuSite
 		item.attachYourselfToYourParent();
 	}
 
+	///////////////////////////////////////////////////////////////////
+	
+//	(NEW CODE)
+	
+	/*** **************************************************************
+	 *  Adds a JTextField to a menu.
+	 *  The menu is created if it does not already exist.
+	 *  <p>
+	 *  This method is the preferred way to both create menus and
+	 *  add jTextField to existing menus.
+	 *  See {@link #addMenu addMenu(...)} for the
+	 *  rules of menu creation.
+	 *  <p>
+	 *  By default, the "name" is used for the "label." However,
+	 *  when there is a name map (see {@link #mapNames}), then the name
+	 *  parameter is used for the name, and the associated labels and
+	 *  shortcuts specified in the map are used.
+	 *  If there is a map, but the map has no
+	 *  entry for the item named by the <code>name</code> parameter,
+	 *  then the name is used for the label and a warning is logged to the
+	 *  com.holub.ui stream using the standard java Logging APIs.
+	 *
+	 *  @param requester	The object that requested that this
+	 *  					line item be added.
+	 *
+	 *  @param name		The (hidden) name text for this item.
+	 *  				When there's no {@linkplain #mapNames name map},
+	 *  				the same string is used for	both the name and the
+	 *  				label (and there is no shortcut), otherwise
+	 *  				the <code>name</code> argument specifies the
+	 *  				name only, and the associated label
+	 *  				(and shortcut) is taken	from the map.
+	 *  				<p>
+	 *  				Use the name <code>"-"</code> to place a separator
+	 *  				into a menu. The <code>listener</code> argument
+	 *  				is not used in this case, and can be null.
+	 *
+	 *  @param toThisMenu The specifier of the menu to which you're adding
+	 *  				  the line item.
+	 *  				  (See {@link #addMenu addMenu(...)}
+	 *  				  for a discussion of specifiers.) The
+	 *  				  specified menu is created if it doesn't
+	 *  				  already exist.
+	 *
+	 *  @param listener	The ActionListener to notify when the menu
+	 *  				item is selected.
+	 *
+	 *	@see #addMenu
+	 *  @see #mapNames
+	 */
+	public static void addTextField(	Object requester,
+								String toThisMenu,
+//								String name,
+								ActionListener listener)
+	{
+		assert requester  != null: "null requester"	;
+//		assert name		  != null: "null item" 		;
+		assert toThisMenu != null: "null toThisMenu";
+		assert valid();
+
+		// The "element" field is here only so that we don't create
+		// a menu if the assertion in the else clause fires.
+		// Otherwise, we could just create the items in the
+		// if and else clauses.
+
+		Component element;
+
+		assert listener	!= null: "null listener";
+		JTextField fieldItem = new JTextField("Set Tick Count");
+		fieldItem.addActionListener( listener );
+
+		element = fieldItem;
+
+		JMenu found = createSubmenuByName( requester, toThisMenu );
+		if( found==null )
+			throw new IllegalArgumentException(
+						"addLine() can't find menu ("+ toThisMenu +")" );
+
+		Item item = new Item(element, found, toThisMenu );
+		menusAddedBy(requester).add( item );
+		item.attachYourselfToYourParent();
+	}
+	
+	///////////////////////////////////////////////////////////////////
+	
 	/*** **************************************************************
 	 *  Remove all items that were added by this requester.
 	 *  <p>
