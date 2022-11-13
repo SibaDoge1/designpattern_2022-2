@@ -32,7 +32,7 @@ import java.util.Observable;
 public class Clock
 {	private Timer			clock		= new Timer();
 	private TimerTask		tick		= null;
-	private TickData curr_between_ticks = new TickData();
+	TickData TD = new TickData();
 	
 	// The clock can't be an everything-is-static singleton because
 	// it creates a menu, and it can't do that until the menus
@@ -66,11 +66,11 @@ public class Clock
 			tick=null;
 		}
 
-		if( curr_between_ticks.getTick() > 0 )
+		if( TD.getTick() > 0 )
 		{	tick =	new TimerTask()
 					{	public void run(){ tick(); }
 					};
-			clock.scheduleAtFixedRate( tick, 0, curr_between_ticks.getTick());
+			clock.scheduleAtFixedRate( tick, 0, TD.getTick());
 		}
 	}
 
@@ -79,7 +79,7 @@ public class Clock
 
 	public void stop()
 	{	
-		curr_between_ticks.setTick(0);;
+		TD.setTick(0);;
 		startTicking();
 	}
 
@@ -124,23 +124,23 @@ public class Clock
 					if( toDo=='T' )
 						tick();				      // single tick
 					else if (toDo == 'A') {
-						curr_between_ticks.setTick(500); // agonizing
+						TD.setTick(500); // agonizing
 						startTicking( );
 					}
 					else if (toDo == 'S') {
-						curr_between_ticks.setTick(150); // slow
+						TD.setTick(150); // slow
 						startTicking( );
 					}
 					else if (toDo == 'M') {
-						curr_between_ticks.setTick(70);  // medium
+						TD.setTick(70);  // medium
 						startTicking( );
 					}
 					else if (toDo == 'F') {
-						curr_between_ticks.setTick(50);  // fast
+						TD.setTick(50);  // fast
 						startTicking( );
 					}
 					else {
-						curr_between_ticks.setTick(0);   // halt
+						TD.setTick(0);   // halt
 						startTicking( );
 					}
 //						startTicking(   toDo=='A' ? 500:	  // agonizing
@@ -152,7 +152,7 @@ public class Clock
 		
 			// {=midSetup}
 		// 여기여기
-		TickMenu TM = new TickMenu();
+		TickMenu TM = new TickMenu(TD, this, modifier);
 		
 		MenuSite.addLine(this,"Go","Halt",  			modifier);
 		MenuSite.addLine(this,"Go","Tick (Single Step)",modifier);
@@ -160,11 +160,10 @@ public class Clock
 		MenuSite.addLine(this,"Go","Slow",		 		modifier);
 		MenuSite.addLine(this,"Go","Medium",	 	 	modifier);
 		MenuSite.addLine(this,"Go","Fast",				modifier);
-		MenuSite.addTextField(this,"Go",				modifier);
-
+		MenuSite.addTextField(this,"Tick Rate",				modifier);
+		
 		//update when static var is changed >> observer
-		MenuSite.addMenu(this, String.valueOf(curr_between_ticks));
-		MenuSite.removeMyMenus(this);
+		MenuSite.addMenu(this, String.valueOf(TD.getTick()));
 		// {=endSetup}
 		
 ////////////////////////////////////////////////////////////////////////////////////////
