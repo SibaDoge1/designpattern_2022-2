@@ -106,37 +106,26 @@ public class Clock
 	
 		// 3. 사실 GO에 있는 모든 내용이 TICK TIME과 겹치는데...
 		
-		// 어떤 패턴??
-		// startTicking에 
-		// int millisecondsBetweenTicks
-		// 대신 어떤 시간 객체를 넘기기
-		// 미리 정해진 프리셋이 있고..
-		// 그것들엔 시간 값이 고정임
-		// 그냥 입력 받으면 시간을 그대로 넘기기.
-		
 		//JMenuItem과 JTextField를 동시에 받을 수 있어야함.
+		// Halt, Agonizing, Slow, Medium, Fast를 이넘으로 매핑..
+		// 어댑터로 if else하지말고
+		
+		// 더 큰 객체로... encapsulation이 안되려나??
+//		https://docs.oracle.com/javase/7/docs/api/javax/swing/JMenuItem.html
+//		https://docs.oracle.com/javase/7/docs/api/javax/swing/JTextField.html
+//		둘다 JComponent임.
+		
+//		https://docs.oracle.com/javase/7/docs/api/java/awt/event/ActionEvent.html
+//		ActionEvent는 구조가 조금 다름..
+		
+		
 		
 		ActionListener modifier =									//{=startSetup}
 			new ActionListener()
 			{	public void actionPerformed(ActionEvent e)
-				{	
-					// 이렇게하면 JMenuItem인지,
-					// JTextField 인지 알 수 있다.
-					if (e.getSource().getClass() == JMenuItem.class) {
-						System.out.println("this is JMenuItem");
-					}
-					else if (e.getSource().getClass() == JTextField.class) {
-						System.out.println("this is JTextField");
-					}
-					else {
-						System.out.println("undefined");
-					}
-//					// JTextField
-//					String tfname = ((JTextField)e.getSource()).getText();
-//					System.out.println(tfname);
-//					String name = ((JMenuItem)e.getSource()).getName();
-//					System.out.println((JMenuItem)e.getSource());
-//					// System.out.println((JMenuItem)e.getSource());
+				{
+
+					// System.out.println((JMenuItem)e.getSource());
 //					char toDo = name.charAt(0);
 //
 //					if( toDo=='T' ) {
@@ -163,15 +152,13 @@ public class Clock
 //						TD.setTick(0);   // halt
 //						startTicking( );
 //					}
-//						startTicking(   toDo=='A' ? 500:	  // agonizing
-//										toDo=='S' ? 150:	  // slow
-//										toDo=='M' ? 70 :	  // medium
-//										toDo=='F' ? 30 : 0 ); // fast
 				}
 			};
 		
 			// {=midSetup}
-		// 여기여기
+		// Observer Pattern
+		// when millisecondsBetweenTicks value changes,
+		// update the window.
 		TickMenu TM = new TickMenu(TD, this, modifier);
 		
 		MenuSite.addLine(this,"Go","Halt",  			modifier);
