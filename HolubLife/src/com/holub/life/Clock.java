@@ -1,12 +1,15 @@
 package com.holub.life;
 
 import java.awt.*;
+
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
 import java.util.Timer;		// overrides java.awt.timer
 import com.holub.ui.MenuSite;
 import com.holub.tools.Publisher;
+
+import java.util.Observable;
 
 /***
  * The <code>Clock</code> class handles the timing of gameboard
@@ -29,6 +32,7 @@ import com.holub.tools.Publisher;
 public class Clock
 {	private Timer			clock		= new Timer();
 	private TimerTask		tick		= null;
+	private static int curr_between_ticks;
 	
 	// The clock can't be an everything-is-static singleton because
 	// it creates a menu, and it can't do that until the menus
@@ -56,17 +60,17 @@ public class Clock
 	 *  					 the clock should be stopped.
 	 */
 
-	public void startTicking( int millisecondsBetweenTicks )
+	public void startTicking( )
 	{	if(tick != null)
 		{	tick.cancel();
 			tick=null;
 		}
 
-		if( millisecondsBetweenTicks > 0 )
+		if( curr_between_ticks > 0 )
 		{	tick =	new TimerTask()
 					{	public void run(){ tick(); }
 					};
-			clock.scheduleAtFixedRate( tick, 0, millisecondsBetweenTicks);
+			clock.scheduleAtFixedRate( tick, 0, curr_between_ticks);
 		}
 	}
 
@@ -74,7 +78,9 @@ public class Clock
 	 */
 
 	public void stop()
-	{	startTicking( 0 );
+	{	
+		curr_between_ticks = 0;
+		startTicking();
 	}
 
 	/** Create the menu that controls the clock speed and
@@ -117,11 +123,30 @@ public class Clock
 
 					if( toDo=='T' )
 						tick();				      // single tick
-					else
-						startTicking(   toDo=='A' ? 500:	  // agonizing
-										toDo=='S' ? 150:	  // slow
-										toDo=='M' ? 70 :	  // medium
-										toDo=='F' ? 30 : 0 ); // fast
+					else if (toDo == 'A') {
+						curr_between_ticks = 500; // agonizing
+						startTicking( );
+					}
+					else if (toDo == 'S') {
+						curr_between_ticks = 150; // slow
+						startTicking( );
+					}
+					else if (toDo == 'M') {
+						curr_between_ticks = 70;  // medium
+						startTicking( );
+					}
+					else if (toDo == 'F') {
+						curr_between_ticks = 30;  // fast
+						startTicking( );
+					}
+					else {
+						curr_between_ticks = 0;   // halt
+						startTicking( );
+					}
+//						startTicking(   toDo=='A' ? 500:	  // agonizing
+//										toDo=='S' ? 150:	  // slow
+//										toDo=='M' ? 70 :	  // medium
+//										toDo=='F' ? 30 : 0 ); // fast
 				}
 			};
 																	// {=midSetup}
@@ -134,7 +159,9 @@ public class Clock
 		MenuSite.addLine(this,"Go","Fast",				modifier);
 		MenuSite.addTextField(this,"Go",				modifier);
 
-		MenuSite.addMenu(this, "curr");
+		//update when static var is changed >> observer
+		MenuSite.addMenu(this, String.valueOf(curr_between_ticks));
+		MenuSite.removeMyMenus(this);
 		// {=endSetup}
 		
 ////////////////////////////////////////////////////////////////////////////////////////
