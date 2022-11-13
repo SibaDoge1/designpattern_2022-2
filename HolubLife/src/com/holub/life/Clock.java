@@ -98,7 +98,7 @@ public class Clock
 		// 0. 메뉴바에 숫자를 입력받아 그것을 tick의 parameter로 사용한다.
 		// 1. 0을 입력하면 halt
 		
-		// 2. 메뉴바는 아마도 다음처럼 될 것 같음. >> | GRID | GO | TICK TIME (텍스트 박스) SET |
+		// 2. 메뉴바는 아마도 다음처럼 될 것 같음. >> | GRID | GO | TICK TIME (텍스트 박스) |
 		// 2-0. MenuSite 이해하기 
 		// >> MenuSite.java 257 : addMenu
 		// >> MenuSite.java 307 : addLine
@@ -114,37 +114,55 @@ public class Clock
 		// 그것들엔 시간 값이 고정임
 		// 그냥 입력 받으면 시간을 그대로 넘기기.
 		
+		//JMenuItem과 JTextField를 동시에 받을 수 있어야함.
+		
 		ActionListener modifier =									//{=startSetup}
 			new ActionListener()
 			{	public void actionPerformed(ActionEvent e)
-				{
-					String name = ((JMenuItem)e.getSource()).getName();
-					char toDo = name.charAt(0);
-
-					if( toDo=='T' ) {
-						tick();				      // single tick
-						TD.setTick(0); 
+				{	
+					// 이렇게하면 JMenuItem인지,
+					// JTextField 인지 알 수 있다.
+					if (e.getSource().getClass() == JMenuItem.class) {
+						System.out.println("this is JMenuItem");
 					}
-					else if (toDo == 'A') {
-						TD.setTick(500); // agonizing
-						startTicking( );
-					}
-					else if (toDo == 'S') {
-						TD.setTick(150); // slow
-						startTicking( );
-					}
-					else if (toDo == 'M') {
-						TD.setTick(70);  // medium
-						startTicking( );
-					}
-					else if (toDo == 'F') {
-						TD.setTick(50);  // fast
-						startTicking( );
+					else if (e.getSource().getClass() == JTextField.class) {
+						System.out.println("this is JTextField");
 					}
 					else {
-						TD.setTick(0);   // halt
-						startTicking( );
+						System.out.println("undefined");
 					}
+//					// JTextField
+//					String tfname = ((JTextField)e.getSource()).getText();
+//					System.out.println(tfname);
+//					String name = ((JMenuItem)e.getSource()).getName();
+//					System.out.println((JMenuItem)e.getSource());
+//					// System.out.println((JMenuItem)e.getSource());
+//					char toDo = name.charAt(0);
+//
+//					if( toDo=='T' ) {
+//						tick();				      // single tick
+//						TD.setTick(0); 
+//					}
+//					else if (toDo == 'A') {
+//						TD.setTick(500); // agonizing
+//						startTicking( );
+//					}
+//					else if (toDo == 'S') {
+//						TD.setTick(150); // slow
+//						startTicking( );
+//					}
+//					else if (toDo == 'M') {
+//						TD.setTick(70);  // medium
+//						startTicking( );
+//					}
+//					else if (toDo == 'F') {
+//						TD.setTick(50);  // fast
+//						startTicking( );
+//					}
+//					else {
+//						TD.setTick(0);   // halt
+//						startTicking( );
+//					}
 //						startTicking(   toDo=='A' ? 500:	  // agonizing
 //										toDo=='S' ? 150:	  // slow
 //										toDo=='M' ? 70 :	  // medium
