@@ -52,5 +52,7 @@ public class TickMenu implements Observer {
 		MenuSite.addMenu(requester_tmp, String.valueOf(tick));
 //		System.out.println("add Line cur");
 		
+		// the appliance does not show until the window is configured.
+		
 	}
 }
