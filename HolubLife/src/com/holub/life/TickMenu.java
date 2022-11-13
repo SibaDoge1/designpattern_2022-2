@@ -53,6 +53,8 @@ public class TickMenu implements Observer {
 //		System.out.println("add Line cur");
 		
 		// the appliance does not show until the window is configured.
-		
+		Life life_tmp = new Life(1);
+		life_tmp.getLife().revalidate();
+		life_tmp.getLife().repaint();
 	}
 }

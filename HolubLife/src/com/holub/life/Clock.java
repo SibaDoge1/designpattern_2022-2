@@ -121,8 +121,10 @@ public class Clock
 					String name = ((JMenuItem)e.getSource()).getName();
 					char toDo = name.charAt(0);
 
-					if( toDo=='T' )
+					if( toDo=='T' ) {
 						tick();				      // single tick
+						TD.setTick(0); 
+					}
 					else if (toDo == 'A') {
 						TD.setTick(500); // agonizing
 						startTicking( );
