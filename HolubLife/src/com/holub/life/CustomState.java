@@ -15,6 +15,14 @@ public class CustomState implements TickState {
 	}
 	
 	@Override
+	public void doAction() {
+		// TODO Auto-generated method stub
+		setTick();
+		startTick();
+		
+	}
+	
+	@Override
 	public void setTick() {
 		// TODO Auto-generated method stub
 		TD.setTick(customVal);
@@ -27,6 +35,9 @@ public class CustomState implements TickState {
 		Clock.instance().startTicking();
 		
 	}
-
+	
+	public void setCustomVal(int cval) {
+		customVal = cval;
+	}
 
 }

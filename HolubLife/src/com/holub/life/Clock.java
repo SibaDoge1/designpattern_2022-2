@@ -119,28 +119,13 @@ public class Clock
 //		https://docs.oracle.com/javase/7/docs/api/java/awt/event/ActionEvent.html
 //		ActionEvent는 구조가 조금 다름..
 		
-		// 1. 이넘을 클래스로 만들어보기.
-		// 2. ActionListener를 바꿔보기
-		// 3. Life 싱글턴으로 만들어보기. 
+		Go Go = new Go(TD);
 		
 		ActionListener modifier =									//{=startSetup}
 			new ActionListener()
 			{	public void actionPerformed(ActionEvent e)
 				{
-					
-					ExtractTickFromActionEvent ETFAE = new ExtractTickFromActionEvent(e);
-					
-					// (TODO)
-					// 이 if-else도 지울 수 없을까나...
-					if (ETFAE.getName().equals(Go.Tick.getName())) {
-						TD.setTick(ETFAE.getTick());
-						startTicking();
-						tick();
-					}
-					else {
-						TD.setTick(ETFAE.getTick());
-						startTicking();
-					}
+					Go.performGo(e);
 				}
 			};
 		

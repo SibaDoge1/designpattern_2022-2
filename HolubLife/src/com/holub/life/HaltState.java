@@ -13,6 +13,14 @@ public class HaltState implements TickState {
 	}
 	
 	@Override
+	public void doAction() {
+		// TODO Auto-generated method stub
+		setTick();
+		startTick();
+		
+	}
+	
+	@Override
 	public void setTick() {
 		// TODO Auto-generated method stub
 		TD.setTick(0);
