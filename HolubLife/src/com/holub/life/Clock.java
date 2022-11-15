@@ -5,6 +5,8 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
 import java.util.Timer;		// overrides java.awt.timer
+
+import com.holub.ui.LogPanel;
 import com.holub.ui.MenuSite;
 import com.holub.tools.Publisher;
 
@@ -36,6 +38,7 @@ public class Clock
 	//
 	private Clock()
 	{	createMenus();
+		createLogPanel();
 	}
 
 	private static Clock instance;
@@ -109,6 +112,12 @@ public class Clock
 		MenuSite.addLine(this,"Go","Medium",	 	 	modifier);
 		MenuSite.addLine(this,"Go","Fast",				modifier); // {=endSetup}
 	}	//{=endCreateMenus}
+	private void createLogPanel() 
+	{
+		
+		
+	}
+
 
 	private Publisher publisher = new Publisher();
 
