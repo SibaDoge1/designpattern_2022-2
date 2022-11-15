@@ -16,11 +16,14 @@ public final class Life extends JFrame
 	private static JFrame life;
 	
 	public static void main( String[] arguments )
-	{	new Life();
+	{	
+		life();
 	}
 
 	private Life()
-	{	super( "The Game of Life. "
+	{	
+		
+		super( "The Game of Life. "
 					+"(c)2003 Allen I. Holub <http://www.holub.com>");
 		
 		// Must establish the MenuSite very early in case
@@ -35,8 +38,7 @@ public final class Life extends JFrame
 		setVisible( true );
 	}
 	
-	
-	public synchronized static JFrame instance()
+	public synchronized static JFrame life()
 	{	if( life == null )
 			life = new Life();
 		return life;
