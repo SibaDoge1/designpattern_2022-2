@@ -41,6 +41,7 @@ public class Clock
 	private Clock()
 	{	createMenus();
 	}
+	
 
 	private static Clock instance;
 
@@ -118,6 +119,9 @@ public class Clock
 //		https://docs.oracle.com/javase/7/docs/api/java/awt/event/ActionEvent.html
 //		ActionEvent는 구조가 조금 다름..
 		
+		// 1. 이넘을 클래스로 만들어보기.
+		// 2. ActionListener를 바꿔보기
+		// 3. Life 싱글턴으로 만들어보기. 
 		
 		ActionListener modifier =									//{=startSetup}
 			new ActionListener()

@@ -54,8 +54,8 @@ public class TickMenu implements Observer {
 		
 		// the appliance does not show until the window is configured.
 		// let the component know that some configuration has occured.
-		Life life_tmp = new Life(1);
-		life_tmp.getLife().revalidate();
-		life_tmp.getLife().repaint();
+		Life.getLife().revalidate();
+		Life.getLife().repaint();
 	}
+
 }
