@@ -24,3 +24,11 @@ hs_err_pid*
 /bin/
 .project
 .classpath
+
+.idea/
+*.iml
+*.war
+*.tar
+log4sql*
+_DOC/
+META-INF/
