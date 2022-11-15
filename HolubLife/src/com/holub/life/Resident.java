@@ -58,7 +58,8 @@ public final class Resident implements Cell
 		if( southeast.isAlive()) ++neighbors;
 		if( southwest.isAlive()) ++neighbors;
 
-		willBeAlive = (neighbors==3 || (amAlive && neighbors==2));
+		//willBeAlive = (neighbors==3 || (amAlive && neighbors==2));
+		willBeAlive = Universe.instance().currentRule.checkState(neighbors, amAlive);
 		return !isStable();
 	}
 

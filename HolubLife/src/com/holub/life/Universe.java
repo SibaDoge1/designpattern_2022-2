@@ -29,6 +29,7 @@ import com.holub.life.Resident;
 public class Universe extends JPanel
 {	private 		final Cell  	outermostCell;
 	private static	final Universe 	theInstance = new Universe();
+	public Rule currentRule;
 
 	/** The default height and width of a Neighborhood in cells.
 	 *  If it's too big, you'll run too slowly because
@@ -153,6 +154,8 @@ public class Universe extends JPanel
 				}
 			}
 		);
+
+		currentRule = new DefaultRule();
 	}
 
 	/** Singleton Accessor. The Universe object itself is manufactured
