@@ -3,6 +3,8 @@ package com.holub.life;
 import java.awt.*;
 import javax.swing.*;
 import com.holub.ui.MenuSite;
+import com.holub.ui.ProxyLog;
+import com.holub.ui.ProxyLogHanddler;
 import com.holub.ui.LogPanel;
 
 /*******************************************************************
@@ -30,8 +32,12 @@ public final class Life extends JFrame
 		
 		setDefaultCloseOperation	( EXIT_ON_CLOSE 		);
 		getContentPane().setLayout	( new BorderLayout()	);
-		LogPanel.SetLogPanelText("<html>First line<br><br><br><br>lol</html>");
-		getContentPane().add(LogPanel.instance(),BorderLayout.NORTH );
+		
+		LogPanel initial = new LogPanel();
+		ProxyLogHanddler logHanddler = new ProxyLogHanddler(initial);
+		
+		initial.SetLogPanelText("<html>First line<br><br><br><br>lol</html>");
+		getContentPane().add(initial,BorderLayout.NORTH );
 		getContentPane().add( Universe.instance(), BorderLayout.CENTER); //{=life.java.install}
 
 		pack();
