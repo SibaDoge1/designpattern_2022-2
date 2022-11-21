@@ -119,6 +119,12 @@ public class Clock
 //		https://docs.oracle.com/javase/7/docs/api/java/awt/event/ActionEvent.html
 //		ActionEvent는 구조가 조금 다름..
 		
+		//enum을 써서했지만 
+		// if else가 난무 
+		// tick과 다른 go menuitem과 행동양식이 다르기 때문
+		// state pattern을 적용
+		
+		
 		Go Go = new Go(TD);
 		
 		ActionListener modifier =									//{=startSetup}
