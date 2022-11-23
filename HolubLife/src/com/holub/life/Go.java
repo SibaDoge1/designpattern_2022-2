@@ -1,6 +1,11 @@
 package com.holub.life;
 
 public enum Go {
+	
+	//여기여기여기
+	// (TODO)
+	// enum 을 클래스로 만들어서 state pattern을 적용할 수 있지않을까?
+	
 	Halt		(0, "Halt"), 
 	Tick 		(0, "Tick (Single Step)"),
 	Agonizing	(500, "Agonizing"),	
