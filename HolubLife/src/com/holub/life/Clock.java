@@ -127,24 +127,34 @@ public class Clock
 		
 		Go Go = new Go(TD);
 		
-		ActionListener modifier =									//{=startSetup}
-			new ActionListener()
-			{	public void actionPerformed(ActionEvent e)
-				{
-					Go.performGo(e);
-				}
-			};
+		TickState[] States = new TickState[7];
+		States[0] = new HaltState(TD);
+		States[1] = new TickSingleStepState(TD);
+		States[2] = new AgonizingState(TD);
+		States[3] = new SlowState(TD);
+		States[4] = new MediumState(TD);
+		States[5] = new FastState(TD);
+		States[6] = new CustomState(TD, 0);
 		
-			// {=midSetup}
+		ActionListenerState[] ALSs = new ActionListenerState[7];
+		for(int i = 0; i < ALSs.length; i++) {
+			ALSs[i] = new ActionListenerState(States[i])
+					{
+						public void actionPerformed(ActionEvent e)
+						{
+							Go.performGo(this.getState(), e);
+						}
+				
+					};
+		}
 		
-		
-		MenuSite.addLine(this,"Go","Halt",  			modifier);
-		MenuSite.addLine(this,"Go","Tick (Single Step)",modifier);
-		MenuSite.addLine(this,"Go","Agonizing",	 	  	modifier);
-		MenuSite.addLine(this,"Go","Slow",		 		modifier);
-		MenuSite.addLine(this,"Go","Medium",	 	 	modifier);
-		MenuSite.addLine(this,"Go","Fast",				modifier);
-		MenuSite.addTextField(this,"Tick Rate",				modifier);
+		MenuSite.addLine(this,"Go","Halt",  			ALSs[0]);
+		MenuSite.addLine(this,"Go","Tick (Single Step)",ALSs[1]);
+		MenuSite.addLine(this,"Go","Agonizing",	 	  	ALSs[2]);
+		MenuSite.addLine(this,"Go","Slow",		 		ALSs[3]);
+		MenuSite.addLine(this,"Go","Medium",	 	 	ALSs[4]);
+		MenuSite.addLine(this,"Go","Fast",				ALSs[5]);
+		MenuSite.addTextField(this,"Tick Interval",		ALSs[6]);
 		
 		//update when static var is changed >> observer
 		JMenu item = MenuSite.addMenu(this, String.valueOf(TD.getTick()), 0);
