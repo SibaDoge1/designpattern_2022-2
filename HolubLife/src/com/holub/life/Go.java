@@ -25,6 +25,7 @@ public class Go {
 	
 	public void setE(ActionEvent e) {
 		
+		this.e = e;
 	}
 
 	public void doAction() {
