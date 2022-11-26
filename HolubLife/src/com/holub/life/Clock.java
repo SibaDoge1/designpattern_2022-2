@@ -8,6 +8,7 @@ import java.util.Timer;		// overrides java.awt.timer
 
 import com.holub.ui.LogPanel;
 import com.holub.ui.MenuSite;
+import com.holub.ui.TimeLogCaller;
 import com.holub.tools.Publisher;
 
 /***
@@ -31,6 +32,7 @@ import com.holub.tools.Publisher;
 public class Clock
 {	private Timer			clock		= new Timer();
 	private TimerTask		tick		= null;
+	private TimeLogCaller 	logcaller	= null;
 
 	// The clock can't be an everything-is-static singleton because
 	// it creates a menu, and it can't do that until the menus
@@ -39,6 +41,7 @@ public class Clock
 	private Clock()
 	{	createMenus();
 		createLogPanel();
+		logcaller = new TimeLogCaller();
 	}
 
 	private static Clock instance;
@@ -156,6 +159,8 @@ public class Clock
 				}
 			}
 		);
+		logcaller.setCurrentVal(1);
+		LogPanel.PostRefreshLog();
 	}
 
 	/** Check if any item on the menu bar has been selected.

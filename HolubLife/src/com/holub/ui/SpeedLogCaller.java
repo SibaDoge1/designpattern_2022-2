@@ -11,14 +11,9 @@ public class SpeedLogCaller extends LogCaller {
 		LogPanel.SetLogCallerOnPannel(this);
 	}
 
-	@Override
-	public String GetStoredCommand() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
-	<T> void setCurrentVal(T val) {
+	public <T> void setCurrentVal(T val) {
 		// TODO Auto-generated method stub
 		if(val.getClass().getName() == "java.lang.Integer") 
 		{

@@ -33,14 +33,14 @@ public class LogPanel extends JLabel {
 	}
 
 	StringBuilder totallog = new StringBuilder();
-	public void PostRefreshLog() 
+	public static void PostRefreshLog() 
 	{
-		totallog.setLength(0);
-		totallog.append("<html>Log of Life <br>");
-		for( ILogCaller logcall : logCallList){
-			totallog.append(logcall.GetStoredCommand());
+		instance.totallog.setLength(0);
+		instance.totallog.append("<html>Log of Life <br>");
+		for( ILogCaller logcall : instance.logCallList){
+			instance.totallog.append(logcall.GetStoredCommand());
 		}
-		SetLogPanelText(totallog.toString());
+		instance.SetLogPanelText(instance.totallog.toString());
 	}
 
 	//그리고 최종 로깅의 호출을 라이프의 1틱이 끝이 났을때 호출,

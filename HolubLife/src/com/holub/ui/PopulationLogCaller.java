@@ -9,11 +9,7 @@ public class PopulationLogCaller extends LogCaller {
 		LogPanel.SetLogCallerOnPannel(this);
 		initializePopulation();
 	}
-	@Override
-	public String GetStoredCommand() {
-		getStoredLog();
-		return null;
-	}
+	
 	int currentPopulation = 0 ;
 	public void initializePopulation() 
 	{
@@ -22,7 +18,7 @@ public class PopulationLogCaller extends LogCaller {
 
 	//add
 	@Override
-	<T> void setCurrentVal(T val) {
+	public <T> void setCurrentVal(T val) {
 		if(val.getClass().getName() == "java.lang.Integer") 
 		{
 			currentPopulation += (int)val;

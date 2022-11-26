@@ -16,7 +16,7 @@ public abstract class LogCaller implements ILogCaller{
 	}
 
 	//현재 값을 세팅하는 방식.
-	abstract <T> void setCurrentVal(T val);
+	public abstract <T> void setCurrentVal(T val);
 
 	
 	//매틱마타 재호출 되는 상황에서 로그가 새로 생성 되었을때. 
@@ -26,7 +26,11 @@ public abstract class LogCaller implements ILogCaller{
 		setLogCurrentVal();
 		setLogLineDown();
 	}
-
+	public String GetStoredCommand() {
+		getStoredLog();
+		return log.toString();
+	}
+	
 	void setLogInitalName() 
 	{
 		log.setLength(0);

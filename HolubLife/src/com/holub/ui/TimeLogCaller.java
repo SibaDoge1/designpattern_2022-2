@@ -2,22 +2,28 @@ package com.holub.ui;
 
 public class TimeLogCaller extends LogCaller {
 
-	@Override
-	public String GetStoredCommand() {
-		// TODO Auto-generated method stub
-		return null;
+	public TimeLogCaller() 
+	{
+		logName = "Passed tick : ";
+		log = new StringBuilder();
+		LogPanel.SetLogCallerOnPannel(this);
+
 	}
 
+	long passedTick = 0 ;
+
 	@Override
-	<T> void setCurrentVal(T val) {
-		// TODO Auto-generated method stub
-		
+	public <T> void setCurrentVal(T val) {
+		if(val.getClass().getName() == "java.lang.Integer") 
+		{
+			passedTick += (int)val;
+		}else 
+			System.out.print("speed-type wrong");
 	}
 
 	@Override
 	void setLogCurrentVal() {
-		// TODO Auto-generated method stub
-		
+		log.append(passedTick);
 	}
 
 }
