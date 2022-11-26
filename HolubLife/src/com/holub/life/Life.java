@@ -3,7 +3,6 @@ package com.holub.life;
 import java.awt.*;
 import javax.swing.*;
 import com.holub.ui.MenuSite;
-import com.holub.ui.LogHanddler;
 import com.holub.ui.LogPanel;
 
 /*******************************************************************
@@ -33,9 +32,6 @@ public final class Life extends JFrame
 		getContentPane().setLayout	( new BorderLayout()	);
 		
 		LogPanel initial = new LogPanel();
-		LogHanddler logHanddler = new LogHanddler(initial);
-		
-		initial.SetLogPanelText("<html>First line<br><br><br><br>lol</html>");
 		getContentPane().add(initial,BorderLayout.NORTH );
 		getContentPane().add( Universe.instance(), BorderLayout.CENTER); //{=life.java.install}
 

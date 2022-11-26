@@ -1,21 +1,49 @@
 package com.holub.ui;
 
-import java.awt.Color;
+import java.util.HashSet;
+import java.util.HashMap;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenuBar;
-import com.holub.tools.*;
-import com.holub.life.Universe;
 
-public final class LogPanel extends JLabel {
+public class LogPanel extends JLabel {
+	private static LogPanel instance = null;
+	//겹치기 않게 만들기 위해 
+	HashSet<ILogCaller> logCallList = new HashSet<>();
+	
+	
 	public LogPanel() 
 	{
-		
+		if(instance == null)
+			instance=this;
+		else
+			//이곳에 로그 에러 넣을 것
+			return;
 	}
-	//이걸 어떤 식으로 넣어야 프록시가 적용될까. 
-	//여기서는 간단하게 적에게 호출이 가능한 싱글톤을 활용하겠다. 
-	//그리고 최종 로깅의 호출을 라이프의 1틱이 끝이 났을때,
+	public LogPanel GetInstance () 
+	{
+		return instance;
+	}
+	public static void SetLogCallerOnPannel(ILogCaller val) 
+	{
+		if(instance!=null)
+			instance.logCallList.add(val);
+		else
+			System.out.print("log pannel didn't Setted  ");
+
+	}
+
+	StringBuilder totallog = new StringBuilder();
+	public void PostRefreshLog() 
+	{
+		totallog.setLength(0);
+		totallog.append("<html>Log of Life <br>");
+		for( ILogCaller logcall : logCallList){
+			totallog.append(logcall.GetStoredCommand());
+		}
+		SetLogPanelText(totallog.toString());
+	}
+
+	//그리고 최종 로깅의 호출을 라이프의 1틱이 끝이 났을때 호출,
 	//점을 새로 찍었을때에 기반하여 작성할 것
 	public void SetLogPanelText(String val) 
 	{
