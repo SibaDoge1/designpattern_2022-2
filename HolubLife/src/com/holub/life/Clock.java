@@ -136,10 +136,7 @@ public class Clock
 			};
 		
 			// {=midSetup}
-		// Observer Pattern
-		// when millisecondsBetweenTicks value changes,
-		// update the window.
-		TickMenu TM = new TickMenu(TD, this, modifier);
+		
 		
 		MenuSite.addLine(this,"Go","Halt",  			modifier);
 		MenuSite.addLine(this,"Go","Tick (Single Step)",modifier);
@@ -150,7 +147,12 @@ public class Clock
 		MenuSite.addTextField(this,"Tick Rate",				modifier);
 		
 		//update when static var is changed >> observer
-		MenuSite.addMenu(this, String.valueOf(TD.getTick()));
+		JMenu item = MenuSite.addMenu(this, String.valueOf(TD.getTick()), 0);
+		
+		// Observer Pattern
+		// when millisecondsBetweenTicks value changes,
+		// update the window.
+		TickMenu TM = new TickMenu(TD, this, item);
 		// {=endSetup}
 		
 ////////////////////////////////////////////////////////////////////////////////////////

@@ -259,7 +259,12 @@ public final class MenuSite
 	public static void addMenu( Object requester, String menuSpecifier )
 	{	createSubmenuByName( requester, menuSpecifier );
 	}
-
+	
+	public static JMenu addMenu( Object requester, String menuSpecifier , Integer i)
+	{	
+		return createSubmenuByName( requester, menuSpecifier );
+	}
+	
 	/*** **************************************************************
 	 *  Adds a line item to a menu.
 	 *  The menu is created if it does not already exist.

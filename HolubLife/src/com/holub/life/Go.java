@@ -43,11 +43,11 @@ public class Go {
 		
 		if (e.getSource().getClass() == JMenuItem.class) {
 			
-			System.out.println("this is JMenuItem");
+//			System.out.println("this is JMenuItem");
 			
 			this.jmi = (JMenuItem)e.getSource();
 			String name = jmi.getName();
-			System.out.print(name);
+//			System.out.print(name);
 			if (name == "Halt") this.CurrentState = HaltState;
 			if (name == "Tick (Single Step)") this.CurrentState = TickSingleStepState;
 			if (name == "Agonizing") this.CurrentState = AgonizingState;
@@ -57,7 +57,7 @@ public class Go {
 		}
 		else if (e.getSource().getClass() == JTextField.class) {
 			
-			System.out.println("this is JTextField");
+//			System.out.println("this is JTextField");
 			this.CurrentState = CustomState;
 					
 			this.jtf = (JTextField)e.getSource();
@@ -72,7 +72,7 @@ public class Go {
 			
 		}
 		else {
-			System.out.println("undefined");
+//			System.out.println("undefined");
 			((CustomState)CustomState).setCustomVal(0);
 		}
 	}
