@@ -119,36 +119,24 @@ public class Clock
 //		https://docs.oracle.com/javase/7/docs/api/java/awt/event/ActionEvent.html
 //		ActionEvent는 구조가 조금 다름..
 		
-		// 1. 이넘을 클래스로 만들어보기.
-		// 2. ActionListener를 바꿔보기
-		// 3. Life 싱글턴으로 만들어보기. 
+		//enum을 써서했지만 
+		// if else가 난무 
+		// tick과 다른 go menuitem과 행동양식이 다르기 때문
+		// state pattern을 적용
+		
+		
+		Go Go = new Go(TD);
 		
 		ActionListener modifier =									//{=startSetup}
 			new ActionListener()
 			{	public void actionPerformed(ActionEvent e)
 				{
-					
-					ExtractTickFromActionEvent ETFAE = new ExtractTickFromActionEvent(e);
-					
-					// (TODO)
-					// 이 if-else도 지울 수 없을까나...
-					if (ETFAE.getName().equals(Go.Tick.getName())) {
-						TD.setTick(ETFAE.getTick());
-						startTicking();
-						tick();
-					}
-					else {
-						TD.setTick(ETFAE.getTick());
-						startTicking();
-					}
+					Go.performGo(e);
 				}
 			};
 		
 			// {=midSetup}
-		// Observer Pattern
-		// when millisecondsBetweenTicks value changes,
-		// update the window.
-		TickMenu TM = new TickMenu(TD, this, modifier);
+		
 		
 		MenuSite.addLine(this,"Go","Halt",  			modifier);
 		MenuSite.addLine(this,"Go","Tick (Single Step)",modifier);
@@ -159,7 +147,12 @@ public class Clock
 		MenuSite.addTextField(this,"Tick Rate",				modifier);
 		
 		//update when static var is changed >> observer
-		MenuSite.addMenu(this, String.valueOf(TD.getTick()));
+		JMenu item = MenuSite.addMenu(this, String.valueOf(TD.getTick()), 0);
+		
+		// Observer Pattern
+		// when millisecondsBetweenTicks value changes,
+		// update the window.
+		TickMenu TM = new TickMenu(TD, this, item);
 		// {=endSetup}
 		
 ////////////////////////////////////////////////////////////////////////////////////////
