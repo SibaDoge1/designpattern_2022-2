@@ -29,6 +29,7 @@ public class Go {
 		this.HaltState = new HaltState(TD);
 		this.TickSingleStepState = new TickSingleStepState(TD);
 		this.AgonizingState = new AgonizingState(TD);
+		this.SlowState = new SlowState(TD);
 		this.MediumState = new MediumState(TD);
 		this.FastState = new FastState(TD);
 		this.CustomState = new CustomState(TD, 0);
