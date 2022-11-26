@@ -154,7 +154,7 @@ public class Clock
 		MenuSite.addLine(this,"Go","Slow",		 		ALSs[3]);
 		MenuSite.addLine(this,"Go","Medium",	 	 	ALSs[4]);
 		MenuSite.addLine(this,"Go","Fast",				ALSs[5]);
-		MenuSite.addTextField(this,"Tick Rate",			ALSs[6]);
+		MenuSite.addTextField(this,"Tick Interval",		ALSs[6]);
 		
 		//update when static var is changed >> observer
 		JMenu item = MenuSite.addMenu(this, String.valueOf(TD.getTick()), 0);
