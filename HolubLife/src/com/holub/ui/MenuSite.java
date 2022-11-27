@@ -9,6 +9,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import com.holub.life.TickState;
+
 /*** **************************************************************** 
  *  A MenuSite is a frame that holds a menu bar.
  *  Other objects in
@@ -258,7 +260,12 @@ public final class MenuSite
 	public static void addMenu( Object requester, String menuSpecifier )
 	{	createSubmenuByName( requester, menuSpecifier );
 	}
-
+	
+	public static JMenu addMenu( Object requester, String menuSpecifier , Integer i)
+	{	
+		return createSubmenuByName( requester, menuSpecifier );
+	}
+	
 	/*** **************************************************************
 	 *  Adds a line item to a menu.
 	 *  The menu is created if it does not already exist.
@@ -344,7 +351,136 @@ public final class MenuSite
 		menusAddedBy(requester).add( item );
 		item.attachYourselfToYourParent();
 	}
+	
+	
+	public static void addLineWithState(	Object requester,
+								String toThisMenu,
+								String name,
+								TickState state,
+								ActionListener listener)
+					{
+					assert requester  != null: "null requester"	;
+					assert name	      != null: "null name";
+					assert state	  != null: "null state" 		;
+					assert toThisMenu != null: "null toThisMenu";
+					assert valid();
+					
+					// The "element" field is here only so that we don't create
+					// a menu if the assertion in the else clause fires.
+					// Otherwise, we could just create the items in the
+					// if and else clauses.
+					
+					Component element;
+					
+					if( name.equals("-") )
+					element = new JSeparator();
+					else
+					{	assert listener	!= null: "null listener";
+					
+					JMenuItem lineItem = new JMenuItem(name);
+					lineItem.setName( name );
+					lineItem.addActionListener( listener );
+					setLabelAndShortcut( lineItem );
+					
+					element = lineItem;
+					}
+					
+					JMenu found = createSubmenuByName( requester, toThisMenu );
+					if( found==null )
+					throw new IllegalArgumentException(
+						"addLine() can't find menu ("+ toThisMenu +")" );
+					
+					Item item = new Item(element, found, toThisMenu ,state);
+					menusAddedBy(requester).add( item );
+					item.attachYourselfToYourParent();
+					}
 
+	///////////////////////////////////////////////////////////////////
+	
+//	(NEW CODE)
+	
+	/*** **************************************************************
+	 *  Adds a JTextField to a menu.
+	 *  The menu is created if it does not already exist.
+	 *  <p>
+	 *  This method is the preferred way to both create menus and
+	 *  add jTextField to existing menus.
+	 *  See {@link #addMenu addMenu(...)} for the
+	 *  rules of menu creation.
+	 *  <p>
+	 *  By default, the "name" is used for the "label." However,
+	 *  when there is a name map (see {@link #mapNames}), then the name
+	 *  parameter is used for the name, and the associated labels and
+	 *  shortcuts specified in the map are used.
+	 *  If there is a map, but the map has no
+	 *  entry for the item named by the <code>name</code> parameter,
+	 *  then the name is used for the label and a warning is logged to the
+	 *  com.holub.ui stream using the standard java Logging APIs.
+	 *
+	 *  @param requester	The object that requested that this
+	 *  					line item be added.
+	 *
+	 *  @param name		The (hidden) name text for this item.
+	 *  				When there's no {@linkplain #mapNames name map},
+	 *  				the same string is used for	both the name and the
+	 *  				label (and there is no shortcut), otherwise
+	 *  				the <code>name</code> argument specifies the
+	 *  				name only, and the associated label
+	 *  				(and shortcut) is taken	from the map.
+	 *  				<p>
+	 *  				Use the name <code>"-"</code> to place a separator
+	 *  				into a menu. The <code>listener</code> argument
+	 *  				is not used in this case, and can be null.
+	 *
+	 *  @param toThisMenu The specifier of the menu to which you're adding
+	 *  				  the line item.
+	 *  				  (See {@link #addMenu addMenu(...)}
+	 *  				  for a discussion of specifiers.) The
+	 *  				  specified menu is created if it doesn't
+	 *  				  already exist.
+	 *
+	 *  @param listener	The ActionListener to notify when the menu
+	 *  				item is selected.
+	 *
+	 *	@see #addMenu
+	 *  @see #mapNames
+	 */
+	public static void addTextField(	Object requester,
+								String toThisMenu,
+//								String name,
+								ActionListener listener)
+	{
+		assert requester  != null: "null requester"	;
+//		assert name		  != null: "null item" 		;
+		assert toThisMenu != null: "null toThisMenu";
+		assert valid();
+
+		// The "element" field is here only so that we don't create
+		// a menu if the assertion in the else clause fires.
+		// Otherwise, we could just create the items in the
+		// if and else clauses.
+
+		Component element;
+
+		assert listener	!= null: "null listener";
+		JTextField fieldItem = new JTextField("           ");
+//		fieldItem.repaint();
+		fieldItem.addActionListener( listener );
+
+		element = fieldItem;
+
+		JMenu found = createSubmenuByName( requester, toThisMenu );
+		if( found==null )
+			throw new IllegalArgumentException(
+						"addLine() can't find menu ("+ toThisMenu +")" );
+
+		Item item = new Item(element, found, toThisMenu );
+		menusAddedBy(requester).add( item );
+		item.attachYourselfToYourParent();
+	}
+	
+	///////////////////////////////////////////////////////////////////
+	
 	/*** **************************************************************
 	 *  Remove all items that were added by this requester.
 	 *  <p>
@@ -771,6 +907,8 @@ public final class MenuSite
 												 // JMenuItem's parent
 		private MenuElement parent;		   		 // JMenu or JMenuBar
 		private boolean		isHelpMenu;
+		
+		private TickState state;
 
 		public String toString()
 		{	StringBuffer b = new StringBuffer(parentSpecification);
@@ -806,8 +944,25 @@ public final class MenuSite
 		 *  				 be a JMenuBar or a JMenu.
 		 */
 
+		
 		public Item( Component item, MenuElement parent,
-											String parentSpecification )
+										String parentSpecification )
+		{	assert parent != null;
+		assert parent instanceof JMenu || parent instanceof JMenuBar
+			: "Parent must be JMenu or JMenuBar";
+		
+		this.item		   = item;
+		this.parent		   = parent;
+		this.parentSpecification = parentSpecification;
+		this.isHelpMenu  =
+		( item instanceof JMenuItem )
+		&& ( item.getName().compareToIgnoreCase("help")==0 );
+		
+		assert valid();
+		}
+								
+		public Item( Component item, MenuElement parent,
+											String parentSpecification, TickState state )
 		{	assert parent != null;
 			assert parent instanceof JMenu || parent instanceof JMenuBar
 								: "Parent must be JMenu or JMenuBar";
@@ -815,11 +970,17 @@ public final class MenuSite
 			this.item		   = item;
 			this.parent		   = parent;
 			this.parentSpecification = parentSpecification;
+			this.state = state;
 			this.isHelpMenu  =
 					( item instanceof JMenuItem )
 				 && ( item.getName().compareToIgnoreCase("help")==0 );
 
 			assert valid();
+		}
+		
+		public TickState getState() {
+			
+			return this.state;
 		}
 
 		public boolean specifiedBy( String specifier )

@@ -1,6 +1,7 @@
 package com.holub.life;
 
 import java.awt.*;
+
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
@@ -11,6 +12,8 @@ import com.holub.ui.MenuSite;
 import com.holub.ui.SpeedLogCaller;
 import com.holub.ui.TimeLogCaller;
 import com.holub.tools.Publisher;
+
+import java.util.Observable;
 
 /***
  * The <code>Clock</code> class handles the timing of gameboard
@@ -36,6 +39,8 @@ public class Clock
 	private TimeLogCaller 	timelogcaller	= null;
 	private SpeedLogCaller 	speedlogcaller	= null;
 
+	TickData TD = new TickData();
+	
 	// The clock can't be an everything-is-static singleton because
 	// it creates a menu, and it can't do that until the menus
 	// are established.
@@ -46,6 +51,7 @@ public class Clock
 		timelogcaller = new TimeLogCaller("Time : ");
 		speedlogcaller = new SpeedLogCaller("Speed type : ");
 	}
+	
 
 	private static Clock instance;
 
@@ -65,17 +71,17 @@ public class Clock
 	 *  					 the clock should be stopped.
 	 */
 
-	public void startTicking( int millisecondsBetweenTicks )
+	public void startTicking( )
 	{	if(tick != null)
 		{	tick.cancel();
 			tick=null;
 		}
 
-		if( millisecondsBetweenTicks > 0 )
+		if( TD.getTick() > 0 )
 		{	tick =	new TimerTask()
 					{	public void run(){ tick(); }
 					};
-			clock.scheduleAtFixedRate( tick, 0, millisecondsBetweenTicks);
+			clock.scheduleAtFixedRate( tick, 0, TD.getTick());
 		}
 	}
 
@@ -83,7 +89,9 @@ public class Clock
 	 */
 
 	public void stop()
-	{	startTicking( 0 );
+	{	
+		TD.setTick(0);;
+		startTicking();
 	}
 
 	/** Create the menu that controls the clock speed and
@@ -93,32 +101,82 @@ public class Clock
 	{
 		// First set up a single listener that will handle all the
 		// menu-selection events except "Exit"
-
-		ActionListener modifier =									//{=startSetup}
-			new ActionListener()
-			{	public void actionPerformed(ActionEvent e)
-				{
-					String name = ((JMenuItem)e.getSource()).getName();
-					speedlogcaller.setCurrentVal(name);
-					LogPanel.PostRefreshLog();				
-					char toDo = name.charAt(0);
-
-					if( toDo=='T' )
-						tick();				      // single tick
-					else
-						startTicking(   toDo=='A' ? 500:	  // agonizing
-										toDo=='S' ? 150:	  // slow
-										toDo=='M' ? 70 :	  // medium
-										toDo=='F' ? 30 : 0 ); // fast
-				}
-			};
-																	// {=midSetup}
-		MenuSite.addLine(this,"Go","Halt",  			modifier);
-		MenuSite.addLine(this,"Go","Tick (Single Step)",modifier);
-		MenuSite.addLine(this,"Go","Agonizing",	 	  	modifier);
-		MenuSite.addLine(this,"Go","Slow",		 		modifier);
-		MenuSite.addLine(this,"Go","Medium",	 	 	modifier);
-		MenuSite.addLine(this,"Go","Fast",				modifier); // {=endSetup}
+	
+////////////////////////////////////////////////////////////////////////////////////////
+		
+		// (TODO) 여기여기여기여기 
+		// 이 부분에서 시간을 동적으로 바꿀 수 있어야함.
+		// 0. 메뉴바에 숫자를 입력받아 그것을 tick의 parameter로 사용한다.
+		// 1. 0을 입력하면 halt
+		
+		// 2. 메뉴바는 아마도 다음처럼 될 것 같음. >> | GRID | GO | TICK TIME (텍스트 박스) |
+		// 2-0. MenuSite 이해하기 
+		// >> MenuSite.java 257 : addMenu
+		// >> MenuSite.java 307 : addLine
+		// 2-1. MenuSite.addTextBox 만들어야함
+	
+		// 3. 사실 GO에 있는 모든 내용이 TICK TIME과 겹치는데...
+		
+		//JMenuItem과 JTextField를 동시에 받을 수 있어야함.
+		// Halt, Agonizing, Slow, Medium, Fast를 이넘으로 매핑..
+		// 어댑터로 if else하지말고
+		
+		// 더 큰 객체로... encapsulation이 안되려나??
+//		https://docs.oracle.com/javase/7/docs/api/javax/swing/JMenuItem.html
+//		https://docs.oracle.com/javase/7/docs/api/javax/swing/JTextField.html
+//		둘다 JComponent임.
+		
+//		https://docs.oracle.com/javase/7/docs/api/java/awt/event/ActionEvent.html
+//		ActionEvent는 구조가 조금 다름..
+		
+		//enum을 써서했지만 
+		// if else가 난무 
+		// tick과 다른 go menuitem과 행동양식이 다르기 때문
+		// state pattern을 적용
+		
+		
+		Go Go = new Go(TD);
+		
+		TickState[] States = new TickState[7];
+		States[0] = new HaltState(TD);
+		States[1] = new TickSingleStepState(TD);
+		States[2] = new AgonizingState(TD);
+		States[3] = new SlowState(TD);
+		States[4] = new MediumState(TD);
+		States[5] = new FastState(TD);
+		States[6] = new CustomState(TD, 0);
+		
+		ActionListenerState[] ALSs = new ActionListenerState[7];
+		for(int i = 0; i < ALSs.length; i++) {
+			ALSs[i] = new ActionListenerState(States[i])
+					{
+						public void actionPerformed(ActionEvent e)
+						{
+							Go.performGo(this.getState(), e);
+						}
+				
+					};
+		}
+		
+		MenuSite.addLine(this,"Go","Halt",  			ALSs[0]);
+		MenuSite.addLine(this,"Go","Tick (Single Step)",ALSs[1]);
+		MenuSite.addLine(this,"Go","Agonizing",	 	  	ALSs[2]);
+		MenuSite.addLine(this,"Go","Slow",		 		ALSs[3]);
+		MenuSite.addLine(this,"Go","Medium",	 	 	ALSs[4]);
+		MenuSite.addLine(this,"Go","Fast",				ALSs[5]);
+		MenuSite.addTextField(this,"Tick Interval",		ALSs[6]);
+		
+		//update when static var is changed >> observer
+		JMenu item = MenuSite.addMenu(this, String.valueOf(TD.getTick()), 0);
+		
+		// Observer Pattern
+		// when millisecondsBetweenTicks value changes,
+		// update the window.
+		TickMenu TM = new TickMenu(TD, this, item);
+		// {=endSetup}
+		
+////////////////////////////////////////////////////////////////////////////////////////
+		
 	}	//{=endCreateMenus}
 	private void createLogPanel() 
 	{
