@@ -8,6 +8,7 @@ import java.util.Timer;		// overrides java.awt.timer
 
 import com.holub.ui.LogPanel;
 import com.holub.ui.MenuSite;
+import com.holub.ui.SpeedLogCaller;
 import com.holub.ui.TimeLogCaller;
 import com.holub.tools.Publisher;
 
@@ -32,7 +33,8 @@ import com.holub.tools.Publisher;
 public class Clock
 {	private Timer			clock		= new Timer();
 	private TimerTask		tick		= null;
-	private TimeLogCaller 	logcaller	= null;
+	private TimeLogCaller 	timelogcaller	= null;
+	private SpeedLogCaller 	speedlogcaller	= null;
 
 	// The clock can't be an everything-is-static singleton because
 	// it creates a menu, and it can't do that until the menus
@@ -41,7 +43,8 @@ public class Clock
 	private Clock()
 	{	createMenus();
 		createLogPanel();
-		logcaller = new TimeLogCaller();
+		timelogcaller = new TimeLogCaller("Time : ");
+		speedlogcaller = new SpeedLogCaller("Speed type : ");
 	}
 
 	private static Clock instance;
@@ -96,6 +99,8 @@ public class Clock
 			{	public void actionPerformed(ActionEvent e)
 				{
 					String name = ((JMenuItem)e.getSource()).getName();
+					speedlogcaller.setCurrentVal(name);
+					LogPanel.PostRefreshLog();				
 					char toDo = name.charAt(0);
 
 					if( toDo=='T' )
@@ -159,7 +164,7 @@ public class Clock
 				}
 			}
 		);
-		logcaller.setCurrentVal(1);
+		timelogcaller.setCurrentVal(1);
 		LogPanel.PostRefreshLog();
 	}
 

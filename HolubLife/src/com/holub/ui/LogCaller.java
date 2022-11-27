@@ -9,11 +9,14 @@ public abstract class LogCaller implements ILogCaller{
 	protected StringBuilder log ;
 
 
-	public LogCaller() 
+	public LogCaller(String val) 
 	{
-		logName = "Default Caller : ";
+		logName = val;
 		log = new StringBuilder();
+		LogPanel.SetLogCallerOnPannel(this);
+		LogPanel.PostRefreshLog();
 	}
+
 
 	//현재 값을 세팅하는 방식.
 	public abstract <T> void setCurrentVal(T val);
