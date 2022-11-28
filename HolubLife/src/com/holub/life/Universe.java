@@ -53,6 +53,8 @@ public class Universe extends JPanel
 		// miserably if the overall size of the grid is too big to fit
 		// on the screen.
 
+		RuleManager.instance();
+
 		outermostCell = new Neighborhood
 						(	DEFAULT_GRID_SIZE,
 							new Neighborhood
@@ -154,7 +156,6 @@ public class Universe extends JPanel
 			}
 		);
 
-		RuleManager.instance();
 	}
 
 	/** Singleton Accessor. The Universe object itself is manufactured
