@@ -32,3 +32,4 @@ hs_err_pid*
 log4sql*
 _DOC/
 META-INF/
+.DS_Store

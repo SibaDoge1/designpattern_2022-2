@@ -4,17 +4,19 @@ import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.JMenu;
+
 import com.holub.ui.MenuSite;
 
 public class TickMenu implements Observer {
 	private int tick;
 	private Object requester;
-	private ActionListener modifier;
+	private JMenu item;
 	
-	public TickMenu(Observable observable, Object requester, ActionListener modifier) {
+	public TickMenu(Observable observable, Object requester, JMenu item) {
 		observable.addObserver(this);
 		this.requester = requester;
-		this.modifier = modifier;
+		this.item = item;
 		
 	}
 	
@@ -30,32 +32,12 @@ public class TickMenu implements Observer {
 	
 
 	public void setTickMenu() {
-		Object requester_tmp = requester;
-		ActionListener modifier_tmp = modifier;
 		
-		MenuSite.removeMyMenus(requester);
-//		System.out.println("remove done");
-		MenuSite.addLine(requester_tmp,"Go","Halt",  			modifier_tmp);
-//		System.out.println("add Line HALT");
-		MenuSite.addLine(requester_tmp,"Go","Tick (Single Step)",modifier_tmp);
-//		System.out.println("add Line Tick");
-		MenuSite.addLine(requester_tmp,"Go","Agonizing",	 	  	modifier_tmp);
-//		System.out.println("add Line Agonizing");
-		MenuSite.addLine(requester_tmp,"Go","Slow",		 		modifier_tmp);
-//		System.out.println("add Line Slow");
-		MenuSite.addLine(requester_tmp,"Go","Medium",	 	 	modifier_tmp);
-//		System.out.println("add Line Medium");
-		MenuSite.addLine(requester_tmp,"Go","Fast",				modifier_tmp);
-//		System.out.println("add Line Fast");
-		MenuSite.addTextField(requester_tmp,"Tick Rate",				modifier_tmp);
-//		System.out.println("add Line TextField");
-		MenuSite.addMenu(requester_tmp, String.valueOf(tick));
-//		System.out.println("add Line cur");
-		
+		item.setText(String.valueOf(tick));
 		// the appliance does not show until the window is configured.
 		// let the component know that some configuration has occured.
-		Life.getLife().revalidate();
-		Life.getLife().repaint();
+		item.repaint();
+		
 	}
 
 }

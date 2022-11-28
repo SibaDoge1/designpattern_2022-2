@@ -119,47 +119,50 @@ public class Clock
 //		https://docs.oracle.com/javase/7/docs/api/java/awt/event/ActionEvent.html
 //		ActionEvent는 구조가 조금 다름..
 		
-		// 1. 이넘을 클래스로 만들어보기.
-		// 2. ActionListener를 바꿔보기
-		// 3. Life 싱글턴으로 만들어보기. 
+		//enum을 써서했지만 
+		// if else가 난무 
+		// tick과 다른 go menuitem과 행동양식이 다르기 때문
+		// state pattern을 적용
 		
-		ActionListener modifier =									//{=startSetup}
-			new ActionListener()
-			{	public void actionPerformed(ActionEvent e)
-				{
-					
-					ExtractTickFromActionEvent ETFAE = new ExtractTickFromActionEvent(e);
-					
-					// (TODO)
-					// 이 if-else도 지울 수 없을까나...
-					if (ETFAE.getName().equals(Go.Tick.getName())) {
-						TD.setTick(ETFAE.getTick());
-						startTicking();
-						tick();
-					}
-					else {
-						TD.setTick(ETFAE.getTick());
-						startTicking();
-					}
-				}
-			};
 		
-			// {=midSetup}
+		Go Go = new Go(TD);
+		
+		TickState[] States = new TickState[7];
+		States[0] = new HaltState(TD);
+		States[1] = new TickSingleStepState(TD);
+		States[2] = new AgonizingState(TD);
+		States[3] = new SlowState(TD);
+		States[4] = new MediumState(TD);
+		States[5] = new FastState(TD);
+		States[6] = new CustomState(TD, 0);
+		
+		ActionListenerState[] ALSs = new ActionListenerState[7];
+		for(int i = 0; i < ALSs.length; i++) {
+			ALSs[i] = new ActionListenerState(States[i])
+					{
+						public void actionPerformed(ActionEvent e)
+						{
+							Go.performGo(this.getState(), e);
+						}
+				
+					};
+		}
+		
+		MenuSite.addLine(this,"Go","Halt",  			ALSs[0]);
+		MenuSite.addLine(this,"Go","Tick (Single Step)",ALSs[1]);
+		MenuSite.addLine(this,"Go","Agonizing",	 	  	ALSs[2]);
+		MenuSite.addLine(this,"Go","Slow",		 		ALSs[3]);
+		MenuSite.addLine(this,"Go","Medium",	 	 	ALSs[4]);
+		MenuSite.addLine(this,"Go","Fast",				ALSs[5]);
+		MenuSite.addTextField(this,"Tick Interval",		ALSs[6]);
+		
+		//update when static var is changed >> observer
+		JMenu item = MenuSite.addMenu(this, String.valueOf(TD.getTick()), 0);
+		
 		// Observer Pattern
 		// when millisecondsBetweenTicks value changes,
 		// update the window.
-		TickMenu TM = new TickMenu(TD, this, modifier);
-		
-		MenuSite.addLine(this,"Go","Halt",  			modifier);
-		MenuSite.addLine(this,"Go","Tick (Single Step)",modifier);
-		MenuSite.addLine(this,"Go","Agonizing",	 	  	modifier);
-		MenuSite.addLine(this,"Go","Slow",		 		modifier);
-		MenuSite.addLine(this,"Go","Medium",	 	 	modifier);
-		MenuSite.addLine(this,"Go","Fast",				modifier);
-		MenuSite.addTextField(this,"Tick Rate",				modifier);
-		
-		//update when static var is changed >> observer
-		MenuSite.addMenu(this, String.valueOf(TD.getTick()));
+		TickMenu TM = new TickMenu(TD, this, item);
 		// {=endSetup}
 		
 ////////////////////////////////////////////////////////////////////////////////////////
