@@ -9,6 +9,7 @@ import java.util.Timer;		// overrides java.awt.timer
 
 import com.holub.ui.LogPanel;
 import com.holub.ui.MenuSite;
+import com.holub.ui.PopulationLogCaller;
 import com.holub.ui.SpeedLogCaller;
 import com.holub.ui.TimeLogCaller;
 import com.holub.tools.Publisher;
@@ -103,7 +104,7 @@ public class Clock
 		// menu-selection events except "Exit"
 	
 ////////////////////////////////////////////////////////////////////////////////////////
-		
+		 
 		// (TODO) 여기여기여기여기 
 		// 이 부분에서 시간을 동적으로 바꿀 수 있어야함.
 		// 0. 메뉴바에 숫자를 입력받아 그것을 tick의 parameter로 사용한다.
@@ -152,6 +153,9 @@ public class Clock
 					{
 						public void actionPerformed(ActionEvent e)
 						{
+							String name = ((JMenuItem)e.getSource()).getName();
+							speedlogcaller.setCurrentVal(name);
+							LogPanel.PostRefreshLog();	
 							Go.performGo(this.getState(), e);
 						}
 				
@@ -214,7 +218,8 @@ public class Clock
 	 *  stopped. (Life uses this for single stepping.)
 	 */
 	public void tick()
-	{	publisher.publish
+	{	
+		publisher.publish
 		(	new Publisher.Distributor()
 			{	public void deliverTo( Object subscriber )
 				{	if( !menuIsActive() )

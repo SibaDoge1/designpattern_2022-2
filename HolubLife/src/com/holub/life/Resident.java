@@ -3,7 +3,9 @@ package com.holub.life;
 import java.awt.*;
 import javax.swing.*;
 import com.holub.ui.Colors;	// Contains constants specifying various
-							// colors not defined in java.awt.Color.
+import com.holub.ui.LogPanel;
+import com.holub.ui.PopulationLogCaller;
+// colors not defined in java.awt.Color.
 import com.holub.life.Cell;
 import com.holub.life.Storable;
 import com.holub.life.Direction;
@@ -80,6 +82,9 @@ public final class Resident implements Cell
 	public boolean transition()
 	{	boolean changed = isStable();
 		amAlive = willBeAlive;
+		if(amAlive)
+			PopulationLogCaller.setCurrentVal_s(1);
+
 		return changed;
 	}
 
@@ -100,6 +105,12 @@ public final class Resident implements Cell
 
 	public void userClicked(Point here, Rectangle surface)
 	{	amAlive = !amAlive;
+		if(amAlive)
+			PopulationLogCaller.setCurrentVal_s(1);
+		else 
+			PopulationLogCaller.setCurrentVal_s(-1);
+
+		LogPanel.PostRefreshLog();
 	}
 
 	public void	   clear()			{amAlive = willBeAlive = false; }

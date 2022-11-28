@@ -7,7 +7,6 @@ import javax.swing.JLabel;
 
 public class LogPanel extends JLabel {
 	private static LogPanel instance = null;
-	//°ãÄ¡±â ¾Ê°Ô ¸¸µé±â À§ÇØ 
 	HashSet<ILogCaller> logCallList = new HashSet<>();
 	
 	
@@ -16,7 +15,6 @@ public class LogPanel extends JLabel {
 		if(instance == null)
 			instance=this;
 		else
-			//ÀÌ°÷¿¡ ·Î±× ¿¡·¯ ³ÖÀ» °Í
 			return;
 	}
 	public LogPanel GetInstance () 
@@ -43,8 +41,8 @@ public class LogPanel extends JLabel {
 		instance.SetLogPanelText(instance.totallog.toString());
 	}
 
-	//±×¸®°í ÃÖÁ¾ ·Î±ëÀÇ È£ÃâÀ» ¶óÀÌÇÁÀÇ 1Æ½ÀÌ ³¡ÀÌ ³µÀ»¶§ È£Ãâ,
-	//Á¡À» »õ·Î Âï¾úÀ»¶§¿¡ ±â¹ÝÇÏ¿© ÀÛ¼ºÇÒ °Í
+	//ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ È£ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1Æ½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½,
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½ï¿½
 	public void SetLogPanelText(String val) 
 	{
 		setText(val);

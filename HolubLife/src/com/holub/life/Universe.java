@@ -8,7 +8,8 @@ import java.awt.event.*;
 
 import com.holub.io.Files;
 import com.holub.ui.MenuSite;
-
+import com.holub.ui.PopulationLogCaller;
+import com.holub.ui.SpeedLogCaller;
 import com.holub.life.Cell;
 import com.holub.life.Storable;
 import com.holub.life.Clock;
@@ -29,6 +30,7 @@ import com.holub.life.Resident;
 public class Universe extends JPanel
 {	private 		final Cell  	outermostCell;
 	private static	final Universe 	theInstance = new Universe();
+	private PopulationLogCaller 	populationlogcaller= null;
 
 	/** The default height and width of a Neighborhood in cells.
 	 *  If it's too big, you'll run too slowly because
@@ -53,6 +55,7 @@ public class Universe extends JPanel
 		// miserably if the overall size of the grid is too big to fit
 		// on the screen.
 
+		populationlogcaller = new PopulationLogCaller("population : ");
 		outermostCell = new Neighborhood
 						(	DEFAULT_GRID_SIZE,
 							new Neighborhood
@@ -147,7 +150,9 @@ public class Universe extends JPanel
 							 Cell.DUMMY,Cell.DUMMY,Cell.DUMMY,Cell.DUMMY
 						   )
 					  )
-					{	if( outermostCell.transition() )
+					{	
+						PopulationLogCaller.resetVal_s();
+						if( outermostCell.transition() )
 							refreshNow();
 					}
 				}
@@ -245,6 +250,7 @@ public class Universe extends JPanel
 						panelBounds.x = 0;
 						panelBounds.y = 0;
 						outermostCell.redraw(g, panelBounds, false); //{=Universe.redraw2}
+						//PopulationLogCaller.setCurrentVal_s(1);
 					}
 					finally
 					{	g.dispose();
