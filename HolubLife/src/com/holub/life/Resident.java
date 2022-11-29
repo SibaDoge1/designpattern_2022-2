@@ -82,6 +82,10 @@ public final class Resident implements Cell
 	{
 		boolean changed = isStable();
 		state = nextState;
+		
+		if(state == 1)
+			PopulationLogCaller.setCurrentVal_s(1);
+		
 		if(state >= RuleManager.instance().getRule().getStates())
 			clear();
 		return changed;
@@ -105,6 +109,12 @@ public final class Resident implements Cell
 	public void userClicked(Point here, Rectangle surface)
 	{
 		state = isAlive() ? 0 : 1;
+		if (isAlive())
+			PopulationLogCaller.setCurrentVal_s(1);
+		else
+			PopulationLogCaller.setCurrentVal_s(-1);
+		LogPanel.PostRefreshLog();
+
 	}
 
 	public void	clear(){
