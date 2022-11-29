@@ -56,6 +56,8 @@ public class Universe extends JPanel
 		// on the screen.
 
 		populationlogcaller = new PopulationLogCaller("population : ");
+		RuleManager.instance();
+
 		outermostCell = new Neighborhood
 						(	DEFAULT_GRID_SIZE,
 							new Neighborhood
@@ -158,6 +160,7 @@ public class Universe extends JPanel
 				}
 			}
 		);
+
 	}
 
 	/** Singleton Accessor. The Universe object itself is manufactured
