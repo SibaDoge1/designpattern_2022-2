@@ -9,9 +9,7 @@ import java.util.Timer;		// overrides java.awt.timer
 
 import com.holub.ui.LogPanel;
 import com.holub.ui.MenuSite;
-import com.holub.ui.PopulationLogCaller;
-import com.holub.ui.SpeedLogCaller;
-import com.holub.ui.TimeLogCaller;
+import com.holub.ui.FacadeLogCaller;
 import com.holub.tools.Publisher;
 
 import java.util.Observable;
@@ -37,8 +35,6 @@ import java.util.Observable;
 public class Clock
 {	private Timer			clock		= new Timer();
 	private TimerTask		tick		= null;
-	private TimeLogCaller 	timelogcaller	= null;
-	private SpeedLogCaller 	speedlogcaller	= null;
 
 	TickData TD = new TickData();
 	
@@ -49,8 +45,6 @@ public class Clock
 	private Clock()
 	{	createMenus();
 		createLogPanel();
-		timelogcaller = new TimeLogCaller("Time : ");
-		speedlogcaller = new SpeedLogCaller("Speed type : ");
 	}
 	
 
@@ -154,8 +148,7 @@ public class Clock
 						public void actionPerformed(ActionEvent e)
 						{
 							String name = ((JMenuItem)e.getSource()).getName();
-							speedlogcaller.setCurrentVal(name);
-							LogPanel.PostRefreshLog();	
+							FacadeLogCaller.SetLogValSpeed(name);
 							Go.performGo(this.getState(), e);
 						}
 				
@@ -227,8 +220,7 @@ public class Clock
 				}
 			}
 		);
-		timelogcaller.setCurrentVal(1);
-		LogPanel.PostRefreshLog();
+		FacadeLogCaller.SetLogValTime(1);
 	}
 
 	/** Check if any item on the menu bar has been selected.

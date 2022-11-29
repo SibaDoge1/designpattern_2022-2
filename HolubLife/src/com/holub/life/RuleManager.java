@@ -1,15 +1,13 @@
 package com.holub.life;
 
-import com.holub.ui.LogPanel;
+import com.holub.ui.FacadeLogCaller;
 import com.holub.ui.MenuSite;
-import com.holub.ui.RuleLogCaller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class RuleManager
 {
-	private RuleLogCaller rulelogcaller = null; 
     private RuleManager()
     {
         establish();
@@ -24,8 +22,6 @@ public class RuleManager
     }
 
     public void establish(){
-        rulelogcaller = new RuleLogCaller("Current Rule : ");
-        rulelogcaller.setCurrentVal("B3/S23/2");
         rule = new RuleDefault();
         MenuSite.addLine(this, "Rule", "B3/S23/2", new ActionListener()
         {
@@ -33,8 +29,7 @@ public class RuleManager
             public void actionPerformed(ActionEvent e)
             {
                 rule = new RuleDefault();
-                rulelogcaller.setCurrentVal("B3/S23/2");
-        		LogPanel.PostRefreshLog();
+                FacadeLogCaller.SetLogValRule("B3/S23/2");
             }
         });
 
@@ -44,8 +39,7 @@ public class RuleManager
             public void actionPerformed(ActionEvent e)
             {
                 rule = new RuleBanners();
-                rulelogcaller.setCurrentVal("B3457/S2367/5");
-        		LogPanel.PostRefreshLog();
+                FacadeLogCaller.SetLogValRule("B3457/S2367/5");
             }
         });
     }

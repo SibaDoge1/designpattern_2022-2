@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.event.*;
 
 import com.holub.io.Files;
+import com.holub.ui.FacadeLogCaller;
+import com.holub.ui.LogPanel;
 import com.holub.ui.MenuSite;
 import com.holub.ui.PopulationLogCaller;
 import com.holub.ui.SpeedLogCaller;
@@ -30,7 +32,6 @@ import com.holub.life.Resident;
 public class Universe extends JPanel
 {	private 		final Cell  	outermostCell;
 	private static	final Universe 	theInstance = new Universe();
-	private PopulationLogCaller 	populationlogcaller= null;
 
 	/** The default height and width of a Neighborhood in cells.
 	 *  If it's too big, you'll run too slowly because
@@ -55,7 +56,6 @@ public class Universe extends JPanel
 		// miserably if the overall size of the grid is too big to fit
 		// on the screen.
 
-		populationlogcaller = new PopulationLogCaller("population : ");
 		RuleManager.instance();
 
 		outermostCell = new Neighborhood
@@ -113,6 +113,8 @@ public class Universe extends JPanel
 			{	public void actionPerformed(ActionEvent e)
 				{	outermostCell.clear();
 					repaint();
+					FacadeLogCaller.ResetLogValTime();
+					FacadeLogCaller.ResetLogValPopulation();
 				}
 			}
 		);
@@ -121,7 +123,10 @@ public class Universe extends JPanel
 		(	this, "Grid", "Load",
 			new ActionListener()
 			{	public void actionPerformed(ActionEvent e)
-				{	doLoad();
+				{	
+					FacadeLogCaller.ResetLogValTime();
+					FacadeLogCaller.ResetLogValPopulation();
+					doLoad();
 				}
 			}
 		);
@@ -153,7 +158,7 @@ public class Universe extends JPanel
 						   )
 					  )
 					{	
-						PopulationLogCaller.resetVal_s();
+						FacadeLogCaller.ResetLogValPopulation();
 						if( outermostCell.transition() )
 							refreshNow();
 					}
@@ -183,7 +188,7 @@ public class Universe extends JPanel
 			Storable memento = outermostCell.createMemento();
 			memento.load( in );
 			outermostCell.transfer( memento, new Point(0,0), Cell.LOAD );
-
+			LogPanel.PostRefreshLog();	
 			in.close();
 		}
 		catch( IOException theException )
