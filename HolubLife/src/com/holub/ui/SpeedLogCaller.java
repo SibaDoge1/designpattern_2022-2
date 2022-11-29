@@ -5,6 +5,9 @@ public class SpeedLogCaller extends StringLogCaller {
 
 	public SpeedLogCaller(String val) {
 		super(val);
+		setCurrentVal("Halt");
+		LogPanel.PostRefreshLog();
+
 	}
 
 
