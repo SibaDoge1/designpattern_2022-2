@@ -147,9 +147,10 @@ public class Clock
 					{
 						public void actionPerformed(ActionEvent e)
 						{
-							String name = ((JMenuItem)e.getSource()).getName();
-							FacadeLogCaller.SetLogValSpeed(name);
+							//String name = ((JMenuItem)e.getSource()).getName();
 							Go.performGo(this.getState(), e);
+							FacadeLogCaller.SetLogValSpeed(TD.getTick());
+
 						}
 				
 					};

@@ -1,5 +1,6 @@
 package com.holub.ui;
 
+import com.holub.life.RuleManager;
 
 public class FacadeLogCaller {
 	private static FacadeLogCaller instance = null;
@@ -15,7 +16,7 @@ public class FacadeLogCaller {
 			instance= this;
 			timelogcaller = new TimeLogCaller("Time : ");
 			speedlogcaller = new SpeedLogCaller("Speed type : ");
-			speedlogcaller.setCurrentVal("Halt");
+			speedlogcaller.setCurrentVal(0);
 			populationlogcaller = new PopulationLogCaller("population : ");
 	        rulelogcaller = new RuleLogCaller("Current Rule : ");
 	        rulelogcaller.setCurrentVal("B3/S23/2");
@@ -23,8 +24,9 @@ public class FacadeLogCaller {
 		}
 	}
 	
-	public static void SetLogValSpeed(String val) 
+	public static void SetLogValSpeed(int val) 
 	{
+		instance.speedlogcaller.resetVal();
 		instance.speedlogcaller.setCurrentVal(val);
 		LogPanel.PostRefreshLog();	
 	}
@@ -38,11 +40,12 @@ public class FacadeLogCaller {
 	{
 		instance.populationlogcaller.setCurrentVal(val);
 	}
-	public static void SetLogValRule(String val) 
+	public static void SetLogValRule() 
 	{
-		instance.timelogcaller.setCurrentVal(val);
+		instance.rulelogcaller.setCurrentVal(RuleManager.instance().getRule().getRuleName());
 		LogPanel.PostRefreshLog();	
 	}
+	
 	
 	public static void ResetLogValTime() 
 	{

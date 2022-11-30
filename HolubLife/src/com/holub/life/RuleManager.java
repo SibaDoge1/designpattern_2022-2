@@ -29,7 +29,7 @@ public class RuleManager
             public void actionPerformed(ActionEvent e)
             {
                 rule = new RuleDefault();
-                FacadeLogCaller.SetLogValRule("B3/S23/2");
+                FacadeLogCaller.SetLogValRule();
             }
         });
 
@@ -39,7 +39,7 @@ public class RuleManager
             public void actionPerformed(ActionEvent e)
             {
                 rule = new RuleBanners();
-                FacadeLogCaller.SetLogValRule("B3457/S2367/5");
+                FacadeLogCaller.SetLogValRule();
             }
         });
     }
