@@ -57,7 +57,7 @@ public final class Resident implements Cell
 		if( southwest.isAlive()) ++neighbors;
 
 		//willBeAlive = (neighbors==3 || (amAlive && neighbors==2));
-		nextState = RuleManager.instance().getRule().checkState(this, neighbors);
+		nextState = RuleManager.instance().checkState(this, neighbors);
 		return !isStable();
 	}
 
@@ -80,14 +80,14 @@ public final class Resident implements Cell
 	{
 		boolean changed = isStable();
 		state = nextState;
-		if(state >= RuleManager.instance().getRule().getStates())
+		if(state >= RuleManager.instance().getStates())
 			clear();
 		return changed;
 	}
 
 	public void redraw(Graphics g, Rectangle here, boolean drawAll)
     {   g = g.create();
-		g.setColor(RuleManager.instance().getRule().getStateColors().get(state));
+		g.setColor(RuleManager.instance().getStateColors().get(state));
 		g.fillRect(here.x+1, here.y+1, here.width-1, here.height-1);
 
 		// Doesn't draw a line on the far right and bottom of the
