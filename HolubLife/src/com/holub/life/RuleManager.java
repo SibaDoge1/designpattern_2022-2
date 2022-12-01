@@ -3,8 +3,10 @@ package com.holub.life;
 import com.holub.ui.FacadeLogCaller;
 import com.holub.ui.MenuSite;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 public class RuleManager
 {
@@ -53,6 +55,24 @@ public class RuleManager
     public void setRule(Rule rule)
     {
         this.rule = rule;
+    }
+
+    public Integer checkState(Resident cell, int neighbors) {
+        return rule.checkState(cell, neighbors);
+    }
+
+    public String getRuleName() {
+        return rule.getRuleName();
+    }
+
+    public int getStates()
+    {
+        return rule.getStates();
+    }
+
+    public Map<Integer, Color> getStateColors()
+    {
+        return rule.getStateColors();
     }
 
 
