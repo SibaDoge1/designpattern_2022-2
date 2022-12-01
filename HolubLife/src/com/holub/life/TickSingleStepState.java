@@ -1,5 +1,7 @@
 package com.holub.life;
 
+import java.awt.event.ActionEvent;
+
 public class TickSingleStepState implements TickState {
 	
 	private TickData TD;
@@ -21,6 +23,13 @@ public class TickSingleStepState implements TickState {
 	}
 	
 	@Override
+	public void doAction(ActionEvent e) {
+		// TODO Auto-generated method stub
+		doAction();
+		
+	}
+	
+	@Override
 	public void setTick() {
 		// TODO Auto-generated method stub
 		TD.setTick(0);
@@ -34,6 +43,7 @@ public class TickSingleStepState implements TickState {
 		Clock.instance().tick();
 		
 	}
+
 
 
 }
