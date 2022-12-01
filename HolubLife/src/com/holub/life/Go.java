@@ -22,7 +22,7 @@ public class Go {
 
 	}
 	
-	private void setE(ActionEvent e) {
+	private void setActionEvent(ActionEvent e) {
 		
 		this.e = e;
 	}
@@ -46,7 +46,7 @@ public class Go {
 	
 	public void performGo(TickState state, ActionEvent e) {
 		setState(state);
-		setE(e);
+		setActionEvent(e);
 		doAction();
 	}
 	
