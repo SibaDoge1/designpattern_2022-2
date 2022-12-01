@@ -29,19 +29,7 @@ public class Go {
 
 	private void doAction() {
 		
-		if (CurrentState instanceof CustomState) {
-			JTextField tmp = (JTextField)e.getSource();
-			String value = tmp.getText();
-			try {
-				int cval = Integer.parseInt(value);
-				((CustomState)CurrentState).setCustomVal(cval);
-			} catch (NumberFormatException e) {
-				
-				((CustomState)CurrentState).setCustomVal(0);
-			}
-		}
-		
-		CurrentState.doAction();
+		CurrentState.doAction(e);
 	}
 	
 	public void performGo(TickState state, ActionEvent e) {

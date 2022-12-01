@@ -1,5 +1,9 @@
 package com.holub.life;
 
+import java.awt.event.ActionEvent;
+
+import javax.swing.JTextField;
+
 public class CustomState implements TickState {
 	
 	private TickData TD;
@@ -17,6 +21,24 @@ public class CustomState implements TickState {
 	@Override
 	public void doAction() {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void doAction(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+		JTextField tmp = (JTextField)e.getSource();
+		String value = tmp.getText();
+		try {
+			int cval = Integer.parseInt(value);
+			setCustomVal(cval);
+		} catch (NumberFormatException e1) {
+			
+			setCustomVal(0);
+		}
+		
+		
 		setTick();
 		startTick();
 		
@@ -39,5 +61,6 @@ public class CustomState implements TickState {
 	public void setCustomVal(int cval) {
 		customVal = cval;
 	}
+
 
 }
