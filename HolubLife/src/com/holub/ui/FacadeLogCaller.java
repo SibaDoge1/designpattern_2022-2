@@ -17,7 +17,6 @@ public class FacadeLogCaller {
 			timelogcaller = new TimeLogCaller("Time : ");
 			speedlogcaller = new SpeedLogCaller("Speed type : ");
 			speedlogcaller.setCurrentVal("HaltState");
-			speedlogcaller.setCurrentVal(0);
 			populationlogcaller = new PopulationLogCaller("population : ");
 	        rulelogcaller = new RuleLogCaller("Current Rule : ");
 	        rulelogcaller.setCurrentVal("B3/S23/2");
@@ -25,12 +24,9 @@ public class FacadeLogCaller {
 		}
 	}
 	
-	public static <T> void SetLogValSpeed(T val,T val2) 
+	public static <T> void SetLogValSpeed(T val) 
 	{
-		instance.speedlogcaller.resetVal();
 		instance.speedlogcaller.setCurrentVal(val);
-		instance.speedlogcaller.setCurrentVal(val2);
-
 		LogPanel.PostRefreshLog();	
 	}
 	public static void SetLogValTime(int val) 
@@ -49,7 +45,12 @@ public class FacadeLogCaller {
 		LogPanel.PostRefreshLog();	
 	}
 	
-	
+	public static  void ResetLogValSpeed() 
+	{
+		instance.speedlogcaller.resetVal();
+		LogPanel.PostRefreshLog();	
+
+	}
 	public static void ResetLogValTime() 
 	{
 		instance.timelogcaller.resetVal();

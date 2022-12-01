@@ -2,7 +2,6 @@ package com.holub.life;
 
 import java.awt.event.ActionEvent;
 
-import javax.swing.JMenuItem;
 import javax.swing.JTextField;
 
 public class Go {
@@ -17,37 +16,25 @@ public class Go {
 		this.TD = TD;
 	}
 	
-	public void setState(TickState state) {
+	private void setState(TickState state) {
 		
 		this.CurrentState = state;
 
 	}
 	
-	public void setE(ActionEvent e) {
+	private void setActionEvent(ActionEvent e) {
 		
 		this.e = e;
 	}
 
-	public void doAction() {
+	private void doAction() {
 		
-		if (CurrentState instanceof CustomState) {
-			JTextField tmp = (JTextField)e.getSource();
-			String value = tmp.getText();
-			try {
-				int cval = Integer.parseInt(value);
-				((CustomState)CurrentState).setCustomVal(cval);
-			} catch (NumberFormatException e) {
-				
-				((CustomState)CurrentState).setCustomVal(0);
-			}
-		}
-		
-		CurrentState.doAction();
+		CurrentState.doAction(e);
 	}
 	
 	public void performGo(TickState state, ActionEvent e) {
 		setState(state);
-		setE(e);
+		setActionEvent(e);
 		doAction();
 	}
 	
