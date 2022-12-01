@@ -16,6 +16,7 @@ public class FacadeLogCaller {
 			instance= this;
 			timelogcaller = new TimeLogCaller("Time : ");
 			speedlogcaller = new SpeedLogCaller("Speed type : ");
+			speedlogcaller.setCurrentVal("HaltState");
 			speedlogcaller.setCurrentVal(0);
 			populationlogcaller = new PopulationLogCaller("population : ");
 	        rulelogcaller = new RuleLogCaller("Current Rule : ");
