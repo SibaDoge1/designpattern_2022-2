@@ -24,10 +24,12 @@ public class FacadeLogCaller {
 		}
 	}
 	
-	public static void SetLogValSpeed(int val) 
+	public static <T> void SetLogValSpeed(T val,T val2) 
 	{
 		instance.speedlogcaller.resetVal();
 		instance.speedlogcaller.setCurrentVal(val);
+		instance.speedlogcaller.setCurrentVal(val2);
+
 		LogPanel.PostRefreshLog();	
 	}
 	public static void SetLogValTime(int val) 

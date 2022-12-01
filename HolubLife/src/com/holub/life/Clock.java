@@ -149,7 +149,7 @@ public class Clock
 						{
 							//String name = ((JMenuItem)e.getSource()).getName();
 							Go.performGo(this.getState(), e);
-							FacadeLogCaller.SetLogValSpeed(TD.getTick());
+							FacadeLogCaller.SetLogValSpeed(this.getState(),TD.getTick());
 
 						}
 				
