@@ -62,5 +62,5 @@ public class FacadeLogCaller {
 		instance.populationlogcaller.resetVal();
 		LogPanel.PostRefreshLog();	
 	}
-
+	
 }

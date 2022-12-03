@@ -13,16 +13,14 @@ public abstract class LogCaller implements ILogCaller{
 	{
 		logName = val;
 		log = new StringBuilder();
-		LogPanel.SetLogCallerOnPannel(this);
-		LogPanel.PostRefreshLog();
 	}
 
 
-	//ÇöÀç °ªÀ» ¼¼ÆÃÇÏ´Â ¹æ½Ä.
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½.
 	public abstract <T> void setCurrentVal(T val);
 
 	
-	//¸ÅÆ½¸¶Å¸ ÀçÈ£Ãâ µÇ´Â »óÈ²¿¡¼­ ·Î±×°¡ »õ·Î »ý¼º µÇ¾úÀ»¶§. 
+	//ï¿½ï¿½Æ½ï¿½ï¿½Å¸ ï¿½ï¿½È£ï¿½ï¿½ ï¿½Ç´ï¿½ ï¿½ï¿½È²ï¿½ï¿½ï¿½ï¿½ ï¿½Î±×°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½. 
 	final void getStoredLog() 
 	{
 		setLogInitalName();
@@ -32,6 +30,13 @@ public abstract class LogCaller implements ILogCaller{
 	public String GetStoredCommand() {
 		getStoredLog();
 		return log.toString();
+	}
+	
+	//only Used On Initial process
+	protected void InitializeOnLog() {
+		LogPanel.SetLogCallerOnPannel(this);
+		LogPanel.PostRefreshLog();
+
 	}
 	
 	void setLogInitalName() 

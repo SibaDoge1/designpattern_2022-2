@@ -6,6 +6,7 @@ public class StringLogCaller extends LogCaller {
 
 	public StringLogCaller(String val) {
 		super(val);
+		InitializeOnLog();
 	}
 
 	@Override

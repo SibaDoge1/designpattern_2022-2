@@ -1,11 +1,12 @@
 package com.holub.ui;
 
-public class NumericalLogCaller extends LogCaller{
+public abstract class NumericalLogCaller extends LogCaller{
 
 	public NumericalLogCaller(String val) 
 	{
 		super(val);
 		currentVal = 0;
+		InitializeOnLog();
 	}
 
 	protected long currentVal = 0;
