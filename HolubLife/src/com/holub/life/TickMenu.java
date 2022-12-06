@@ -33,9 +33,10 @@ public class TickMenu implements Observer {
 
 	public void setTickMenu() {
 		
-		item.setText(String.valueOf(tick));
 		// the appliance does not show until the window is configured.
 		// let the component know that some configuration has occured.
+		// tick value를 가져와서 preset인지아닌지.. 확인 가능할듯..
+		item.setText(String.valueOf(tick));
 		item.repaint();
 		
 	}
