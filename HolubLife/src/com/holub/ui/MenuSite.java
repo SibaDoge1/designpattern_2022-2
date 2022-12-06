@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import com.holub.life.TickState;
+import com.holub.life.clock.TickState;
 
 /*** **************************************************************** 
  *  A MenuSite is a frame that holds a menu bar.

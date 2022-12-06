@@ -1,17 +1,13 @@
 package com.holub.life;
 
 import java.awt.*;
-import javax.swing.*;
+
+import com.holub.life.rule.RuleManager;
 import com.holub.ui.Colors;	// Contains constants specifying various
-import com.holub.ui.FacadeLogCaller;
-import com.holub.ui.LogPanel;
-import com.holub.ui.PopulationLogCaller;
+import com.holub.ui.log.FacadeLogCaller;
+import com.holub.ui.log.LogPanel;
 // colors not defined in java.awt.Color.
-import com.holub.life.Cell;
-import com.holub.life.Storable;
-import com.holub.life.Direction;
-import com.holub.life.Neighborhood;
-import com.holub.life.Universe;
+
 
 /*** ****************************************************************
  * The Resident class implements a single cell---a "resident" of a

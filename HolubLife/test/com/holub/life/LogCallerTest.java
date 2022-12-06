@@ -7,10 +7,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.holub.ui.LogPanel;
-import com.holub.ui.NumericalLogCaller;
-import com.holub.ui.SpeedLogCaller;
-import com.holub.ui.UnInitializedLogCaller;
+import com.holub.ui.log.LogPanel;
+import com.holub.ui.log.SpeedLogCaller;
+import com.holub.ui.log.UnInitializedLogCaller;
 
 class LogCallerTest {
 

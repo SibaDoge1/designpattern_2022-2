@@ -3,8 +3,8 @@ package com.holub.life;
 import java.awt.*;
 import javax.swing.*;
 import com.holub.ui.MenuSite;
-import com.holub.ui.FacadeLogCaller;
-import com.holub.ui.LogPanel;
+import com.holub.ui.log.FacadeLogCaller;
+import com.holub.ui.log.LogPanel;
 
 /*******************************************************************
  * An implemenation of Conway's Game of Life.

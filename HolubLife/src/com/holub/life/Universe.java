@@ -7,16 +7,11 @@ import javax.swing.*;
 import java.awt.event.*;
 
 import com.holub.io.Files;
-import com.holub.ui.FacadeLogCaller;
-import com.holub.ui.LogPanel;
+import com.holub.life.rule.RuleManager;
+import com.holub.life.clock.Clock;
+import com.holub.ui.log.FacadeLogCaller;
+import com.holub.ui.log.LogPanel;
 import com.holub.ui.MenuSite;
-import com.holub.ui.PopulationLogCaller;
-import com.holub.ui.SpeedLogCaller;
-import com.holub.life.Cell;
-import com.holub.life.Storable;
-import com.holub.life.Clock;
-import com.holub.life.Neighborhood;
-import com.holub.life.Resident;
 
 /**
  * The Universe is a mediator that sits between the Swing

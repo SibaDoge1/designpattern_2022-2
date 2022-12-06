@@ -4,10 +4,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.holub.life.Resident;
-import com.holub.life.RuleBanners;
-import com.holub.life.RuleDefault;
-import com.holub.life.RuleManager;
+import com.holub.life.rule.RuleBanners;
+import com.holub.life.rule.RuleDefault;
+import com.holub.life.rule.RuleManager;
 
 import static com.holub.life.Life.life;
 import static org.junit.jupiter.api.Assertions.*;
