@@ -1,5 +1,6 @@
 package com.holub.life;
 
+import com.holub.ui.FacadeLogCaller;
 import com.holub.ui.MenuSite;
 
 import java.awt.*;
@@ -30,6 +31,7 @@ public class RuleManager
             public void actionPerformed(ActionEvent e)
             {
                 rule = new RuleDefault();
+                FacadeLogCaller.SetLogValRule();
             }
         });
 
@@ -39,6 +41,7 @@ public class RuleManager
             public void actionPerformed(ActionEvent e)
             {
                 rule = new RuleBanners();
+                FacadeLogCaller.SetLogValRule();
             }
         });
     }

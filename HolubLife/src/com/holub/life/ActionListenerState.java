@@ -3,6 +3,8 @@ package com.holub.life;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import com.holub.ui.FacadeLogCaller;
+
 public class ActionListenerState implements ActionListener{
 	
 	private TickState state;
@@ -18,6 +20,7 @@ public class ActionListenerState implements ActionListener{
 		// TODO Auto-generated method stub
 		actionPerformed(e, this.Go);
 		
+		FacadeLogCaller.SetLogValSpeed(this.getState());
 	}
 	
 	public void actionPerformed(ActionEvent e, Go Go) {

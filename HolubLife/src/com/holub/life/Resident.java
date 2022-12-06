@@ -3,7 +3,10 @@ package com.holub.life;
 import java.awt.*;
 import javax.swing.*;
 import com.holub.ui.Colors;	// Contains constants specifying various
-							// colors not defined in java.awt.Color.
+import com.holub.ui.FacadeLogCaller;
+import com.holub.ui.LogPanel;
+import com.holub.ui.PopulationLogCaller;
+// colors not defined in java.awt.Color.
 import com.holub.life.Cell;
 import com.holub.life.Storable;
 import com.holub.life.Direction;
@@ -80,7 +83,11 @@ public final class Resident implements Cell
 	{
 		boolean changed = isStable();
 		state = nextState;
-		if(state >= RuleManager.instance().getStates())
+		
+		if(state == 1)
+			FacadeLogCaller.SetLogValPopulation(1);
+		
+		if(state >= RuleManager.instance().getRule().getStates())
 			clear();
 		return changed;
 	}
@@ -103,6 +110,12 @@ public final class Resident implements Cell
 	public void userClicked(Point here, Rectangle surface)
 	{
 		state = isAlive() ? 0 : 1;
+		if (isAlive())
+			FacadeLogCaller.SetLogValPopulation(1);
+		else
+			FacadeLogCaller.SetLogValPopulation(-1);
+		LogPanel.PostRefreshLog();
+
 	}
 
 	public void	clear(){
@@ -129,6 +142,9 @@ public final class Resident implements Cell
 		if( doLoad )
 		{
 			state = memento.isAlive(upperLeft) ? 1 : 0;
+			if(state == 1)
+				FacadeLogCaller.SetLogValPopulation(1);
+
 			nextState = state;
 			if(isAlive())
 				return true;

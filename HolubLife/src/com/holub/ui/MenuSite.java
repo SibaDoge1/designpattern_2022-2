@@ -193,6 +193,7 @@ public final class MenuSite
 		assert container != null;
 		assert menuFrame == null:
 							"Tried to establish more than one MenuSite";
+		
 
 		menuFrame = container;
 		menuFrame.setJMenuBar( menuBar = new JMenuBar() );
@@ -1223,7 +1224,9 @@ public final class MenuSite
 			Object fileId = new Object();
 			MenuSite.addMenu(fileId, "File" );
 			MenuSite.addLine(fileId, "File", "Quit", terminator);
-			MenuSite.addLine(fileId, "File", "Bye",  terminator);
+			MenuSite.addLine(fileId, "File", "Bye",  terminator);			
+			MenuSite.addLine(fileId, "File", "Basdf",  terminator);
+
 
 			// Now, make a few more menus.
 

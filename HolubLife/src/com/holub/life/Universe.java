@@ -7,8 +7,11 @@ import javax.swing.*;
 import java.awt.event.*;
 
 import com.holub.io.Files;
+import com.holub.ui.FacadeLogCaller;
+import com.holub.ui.LogPanel;
 import com.holub.ui.MenuSite;
-
+import com.holub.ui.PopulationLogCaller;
+import com.holub.ui.SpeedLogCaller;
 import com.holub.life.Cell;
 import com.holub.life.Storable;
 import com.holub.life.Clock;
@@ -110,6 +113,8 @@ public class Universe extends JPanel
 			{	public void actionPerformed(ActionEvent e)
 				{	outermostCell.clear();
 					repaint();
+					FacadeLogCaller.ResetLogValTime();
+					FacadeLogCaller.ResetLogValPopulation();
 				}
 			}
 		);
@@ -118,7 +123,10 @@ public class Universe extends JPanel
 		(	this, "Grid", "Load",
 			new ActionListener()
 			{	public void actionPerformed(ActionEvent e)
-				{	doLoad();
+				{	
+					FacadeLogCaller.ResetLogValTime();
+					FacadeLogCaller.ResetLogValPopulation();
+					doLoad();
 				}
 			}
 		);
@@ -149,7 +157,9 @@ public class Universe extends JPanel
 							 Cell.DUMMY,Cell.DUMMY,Cell.DUMMY,Cell.DUMMY
 						   )
 					  )
-					{	if( outermostCell.transition() )
+					{	
+						FacadeLogCaller.ResetLogValPopulation();
+						if( outermostCell.transition() )
 							refreshNow();
 					}
 				}
@@ -178,7 +188,7 @@ public class Universe extends JPanel
 			Storable memento = outermostCell.createMemento();
 			memento.load( in );
 			outermostCell.transfer( memento, new Point(0,0), Cell.LOAD );
-
+			LogPanel.PostRefreshLog();	
 			in.close();
 		}
 		catch( IOException theException )
@@ -248,6 +258,7 @@ public class Universe extends JPanel
 						panelBounds.x = 0;
 						panelBounds.y = 0;
 						outermostCell.redraw(g, panelBounds, false); //{=Universe.redraw2}
+						//PopulationLogCaller.setCurrentVal_s(1);
 					}
 					finally
 					{	g.dispose();

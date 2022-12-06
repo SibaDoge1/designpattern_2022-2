@@ -12,7 +12,7 @@ import com.holub.life.Storable;
  * @include /etc/license.txt
  */
 
-public interface Cell
+public interface Cell 
 {
 	/** Figure out the next state of the cell, given the specified
 	 *  neighbors.

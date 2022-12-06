@@ -3,6 +3,8 @@ package com.holub.life;
 import java.awt.*;
 import javax.swing.*;
 import com.holub.ui.MenuSite;
+import com.holub.ui.FacadeLogCaller;
+import com.holub.ui.LogPanel;
 
 /*******************************************************************
  * An implemenation of Conway's Game of Life.
@@ -29,9 +31,14 @@ public final class Life extends JFrame
 		// Must establish the MenuSite very early in case
 		// a subcomponent puts menus on it.
 		MenuSite.establish( this );		//{=life.java.establish}
-
+		
+		
 		setDefaultCloseOperation	( EXIT_ON_CLOSE 		);
 		getContentPane().setLayout	( new BorderLayout()	);
+		
+		LogPanel initial = new LogPanel();
+		FacadeLogCaller logcaller = new FacadeLogCaller();
+		getContentPane().add(initial,BorderLayout.NORTH );
 		getContentPane().add( Universe.instance(), BorderLayout.CENTER); //{=life.java.install}
 
 		pack();

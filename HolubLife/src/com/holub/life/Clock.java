@@ -6,7 +6,10 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
 import java.util.Timer;		// overrides java.awt.timer
+
+import com.holub.ui.LogPanel;
 import com.holub.ui.MenuSite;
+import com.holub.ui.FacadeLogCaller;
 import com.holub.tools.Publisher;
 
 import java.util.Observable;
@@ -32,6 +35,7 @@ import java.util.Observable;
 public class Clock
 {	private Timer			clock		= new Timer();
 	private TimerTask		tick		= null;
+
 	TickData TD = new TickData();
 	
 	// The clock can't be an everything-is-static singleton because
@@ -40,6 +44,7 @@ public class Clock
 	//
 	private Clock()
 	{	createMenus();
+		createLogPanel();
 	}
 	
 
@@ -112,6 +117,12 @@ public class Clock
 		// {=endSetup}
 		
 	}	//{=endCreateMenus}
+	private void createLogPanel() 
+	{
+		
+		
+	}
+
 
 	private Publisher publisher = new Publisher();
 
@@ -142,7 +153,8 @@ public class Clock
 	 *  stopped. (Life uses this for single stepping.)
 	 */
 	public void tick()
-	{	publisher.publish
+	{	
+		publisher.publish
 		(	new Publisher.Distributor()
 			{	public void deliverTo( Object subscriber )
 				{	if( !menuIsActive() )
@@ -150,6 +162,7 @@ public class Clock
 				}
 			}
 		);
+		FacadeLogCaller.SetLogValTime(1);
 	}
 
 	/** Check if any item on the menu bar has been selected.

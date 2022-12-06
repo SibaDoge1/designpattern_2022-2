@@ -9,6 +9,7 @@ import javax.swing.*;
 import com.holub.io.Files;
 import com.holub.life.Cell;
 import com.holub.ui.MenuSite;
+import com.holub.ui.PopulationLogCaller;
 import com.holub.ui.Colors;
 import com.holub.asynch.ConditionVariable;
 
@@ -268,7 +269,6 @@ public final class Neighborhood implements Cell
 			readingPermitted.set(false);
 
 		activeEdges.clear();							/*(1)*/
-
 		for( int row = 0; row < gridSize; ++row ) //{=transition.start}
 			for( int column = 0; column < gridSize; ++column )
 			{	if( grid[row][column].transition() )
